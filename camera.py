@@ -56,7 +56,21 @@ def continuous_capture():
         upload_status = upload(upload_object)
         print("upload status code: {0}".format(upload_status))
         if upload_status == 500:
-            camera.close
+            camera.close()
+        sleep(float(get_image_capture_time()))  # wait some seconds
+
+def capture_three():
+    camera = PiCamera()
+    camera.resolution = (640, 480)
+    camera.start_preview()
+    sleep(2)
+    for filename in camera.capture_continuous('img{timestamp:%Y-%m-%d-%H-%M-%S}.jpg'):
+        print('Captured %s' % filename)
+        upload_object = create_upload_object(filename)
+        upload_status = upload(upload_object)
+        print("upload status code: {0}".format(upload_status))
+        if upload_status == 500:
+            camera.close()
         sleep(float(get_image_capture_time()))  # wait some seconds
 
 
