@@ -36,8 +36,11 @@ def create_upload_object(filename):
 def upload(upload_object):
     url = "{0}{1}".format(server_url, data_upload_url)
     print("url ==> {0}".format(url))
-    request = requests.post(url, data=upload_object)
-    ##urllib.urlopen(url)
+
+    headers = {'Content-Type': 'application/json'}
+    
+    request = requests.post(url, data=upload_object, headers=headers)
+
     print(request)
     return request.status_code
 
@@ -51,7 +54,7 @@ def continuous_capture():
         print('Captured %s' % filename)
         upload_object = create_upload_object(filename)
         print("upload status code: {0}".format(upload(upload_object)))
-        sleep(get_image_capture_time())  # wait some seconds
+        sleep(float(get_image_capture_time()))  # wait some seconds
 
 
 def start():
