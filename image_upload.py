@@ -3,16 +3,16 @@ from utils import *
 
 
 class ImageUpload:
-    def __init__(self, image_file, filename):
-        self.image_file = image_file
-        self.filename = filename
+    def __init__(self, ImageFile, FileName):
+        self.ImageFile = ImageFile
+        self.FileName = FileName
         self.date_created = get_time_in_millis()
 
-    def set_filename(self, filename):
-        self.filename = filename
+    def set_filename(self, FileName):
+        self.FileName = FileName
 
-    def set_image_file(self, image_file):
-        self.image_filee = image_file
+    def set_image_file(self, ImageFile):
+        self.ImageFile = ImageFile
 
 
 class LocationUpload:

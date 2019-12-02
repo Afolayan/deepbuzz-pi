@@ -28,8 +28,8 @@ def capture_image():
 
 def create_upload_object(filename):
     image_upload = ImageUpload(
-        image_file=get_actual_image(filename),
-        filename=filename
+        ImageFile=get_actual_image(filename),
+        FileName=filename
     )
 
 
