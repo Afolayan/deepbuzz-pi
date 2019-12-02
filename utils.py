@@ -42,6 +42,9 @@ def get_date_format():
 def get_image_capture_time():
     return image_capture_time if image_capture_time else 30
 
+def get_image_upload_time():
+    return image_upload_time if image_upload_time else 30
+
 
 def get_server_url():
     return server_url if server_url else "https://deepbuzz-project.azurewebsites.net/"
