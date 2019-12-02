@@ -53,7 +53,10 @@ def continuous_capture():
     for filename in camera.capture_continuous('img{timestamp:%Y-%m-%d-%H-%M-%S}.jpg'):
         print('Captured %s' % filename)
         upload_object = create_upload_object(filename)
-        print("upload status code: {0}".format(upload(upload_object)))
+        upload_status = upload(upload_object)
+        print("upload status code: {0}".format(upload_status))
+        if upload_status == 500:
+            camera.close
         sleep(float(get_image_capture_time()))  # wait some seconds
 
 
