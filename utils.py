@@ -54,4 +54,4 @@ def get_server_url_with_hub():
     return "{0}{1}".format(server_url, device_hub_path)
 
 def get_server_url_upload():
-    return "{0}{1}".format(get_server_url(), "api/DataUpload")
+    return "{0}{1}".format(get_server_url(), "api/DataUpload/Image")
