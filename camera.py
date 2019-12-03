@@ -34,7 +34,8 @@ def create_upload_object(filename):
 
 
 def upload(upload_object):
-    url = "{0}{1}".format(server_url, data_upload_url)
+    ## url = "{0}{1}".format(server_url, data_upload_url)
+    url = get_server_url_upload()
     print("url ==> {0}".format(url))
 
     headers = {'Content-Type': 'application/json'}
@@ -55,7 +56,7 @@ def continuous_capture():
         upload_object = create_upload_object(filename)
         upload_status = upload(upload_object)
         print("upload status code: {0}".format(upload_status))
-        if upload_status == 500:
+        if upload_status != 200:
             camera.close()
         sleep(float(get_image_capture_time()))  # wait some seconds
 
