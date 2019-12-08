@@ -28,27 +28,41 @@ def capture_image():
 
 def create_upload_object(filename):
     image_upload = ImageUpload(
-        ImageFile=get_actual_image(filename),
         FileName=filename
     )
 
+def get_current_time():
+    now = datetime.now()
 
-def upload(upload_object):
-    ## url = "{0}{1}".format(server_url, data_upload_url)
+    print("now =", now)
+
+    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+    print("date and time =", dt_string)	
+
+    return now
+
+def upload(upload_object, filename):
     url = get_server_url_upload()
     print("url ==> {0}".format(url))
 
     headers = {'Content-Type': 'application/json'}
     
-    request = requests.post(url, data=upload_object, headers=headers)
+    path_img = os.getcwd()+"/%s" % filename
+    with open(path_img, "rb") as image_file:
+        name_img= os.path.basename(path_img)
+        files = {'ImageFile': (name_img,image_file,'multipart/form-data',{'Expires': '0'})}
+        datum = {'FileName': filename, 'DateCreated': get_current_time()}
+        with requests.Session() as s:
+            r = s.post(url,files=files, )
 
-    print("request ==> {0}".format(request))
-    print("content ==> {0}".format(request.content))
-    print("json ==> {0}".format(request.json))
-    print("headers ==> {0}".format(request.headers))
-    print("raw is: {0} ".format(request.raw))
-    print("text is: {0} ".format(request.text))
-    return request.status_code
+            print("request ==> {0}".format(r))
+            print("content ==> {0}".format(r.content))
+            print("json ==> {0}".format(r.json))
+            print("headers ==> {0}".format(r.headers))
+            print("raw is: {0} ".format(r.raw))
+            print("raw is: {0} ".format(r.text))
+            
+            print(r.status_code)
 
 
 def continuous_capture():
