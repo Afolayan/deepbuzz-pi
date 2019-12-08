@@ -53,7 +53,7 @@ def upload(upload_object, filename):
         files = {'ImageFile': (name_img,image_file,'multipart/form-data',{'Expires': '0'})}
         datum = {'FileName': filename, 'DateCreated': get_current_time()}
         with requests.Session() as s:
-            r = s.post(url,files=files, )
+            r = s.post(url,files=files, data=datum)
 
             print("request ==> {0}".format(r))
             print("content ==> {0}".format(r.content))
