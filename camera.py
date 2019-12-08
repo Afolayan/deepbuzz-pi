@@ -42,10 +42,11 @@ def upload(upload_object):
     
     request = requests.post(url, data=upload_object, headers=headers)
 
-    print(request)
-    print(request.content)
-    print(request.json)
-    print(request.headers)
+    print("request ==> {0}".format(request))
+    print("content ==> {0}".format(request.content))
+    print("json ==> {0}".format(request.json))
+    print("headers ==> {0}".format(request.headers))
+    print("raw is: {0} ".format(request.raw))
     return request.status_code
 
 
