@@ -47,6 +47,7 @@ def upload(upload_object):
     print("json ==> {0}".format(request.json))
     print("headers ==> {0}".format(request.headers))
     print("raw is: {0} ".format(request.raw))
+    print("text is: {0} ".format(request.text))
     return request.status_code
 
 
