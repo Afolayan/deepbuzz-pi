@@ -43,6 +43,9 @@ def upload(upload_object):
     request = requests.post(url, data=upload_object, headers=headers)
 
     print(request)
+    print(request.content)
+    print(request.json)
+    print(request.headers)
     return request.status_code
 
 
