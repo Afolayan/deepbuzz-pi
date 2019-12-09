@@ -55,6 +55,7 @@ def upload(upload_object, filename):
         with requests.Session() as s:
             r = s.post(url,files=files, data=datum)
 
+            print("request body == {0}".format(r.request))
             print("request ==> {0}".format(r))
             print("content ==> {0}".format(r.content))
             print("json ==> {0}".format(r.json))
@@ -73,7 +74,7 @@ def continuous_capture():
     for filename in camera.capture_continuous('img{timestamp:%Y-%m-%d-%H-%M-%S}.jpg'):
         print('Captured %s' % filename)
         upload_object = create_upload_object(filename)
-        upload_status = upload(upload_object)
+        upload_status = upload(upload_object, filename)
         print("upload status code: {0}".format(upload_status))
         if upload_status != 200:
             camera.close()
