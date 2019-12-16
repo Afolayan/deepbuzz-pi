@@ -1,5 +1,5 @@
 # image_upload.py
-from utils import *
+from utils.utils import *
 
 
 class ImageUpload:

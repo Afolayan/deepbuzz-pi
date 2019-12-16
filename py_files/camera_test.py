@@ -1,9 +1,4 @@
-from time import sleep
-from datetime import datetime
-import time
-from utils import *
-import threading
-import urllib
+from utils.utils import *
 from image_upload import *
 import requests
 

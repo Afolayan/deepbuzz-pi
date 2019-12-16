@@ -1,6 +1,4 @@
-from datetime import datetime
-import time
-from utils import *
+from utils.utils import *
 
 print(current_time_string())
 print(get_time_in_millis())

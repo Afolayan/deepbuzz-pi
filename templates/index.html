@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>DeepBuzz Raspberry Pi Project </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>DeepBuzz Raspberry Pi Project </h1>
+
+
+    <p>
+        <a href=# id=start_camera>
+            <button class='btn btn-default'>Start Camera</button>
+        </a>
+        <a href=# id=stop_camera>
+            <button class='btn btn-default'>Stop Camera</button>
+        </a>
+    </p>
+
+    <h3>Video Feed</h3>
+    <img src="{{ url_for('video_feed') }}">
+
+    <h2>The date and time on the server is: {{ time }}</h2>
+    <p> @2019 Developed by Jephthah Afolayan</p>
+</body>
+<script src="../static/js/index.js"></script>
+</html>

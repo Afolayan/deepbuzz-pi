@@ -1,5 +1,4 @@
 # image_upload.py
-from utils import *
 
 from requests import Session
 from signalr import Connection
