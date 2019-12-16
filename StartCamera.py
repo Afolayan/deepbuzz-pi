@@ -5,6 +5,9 @@ from picamera import PiCamera
 
 from utils.utils import *
 
+camera = PiCamera()
+camera.resolution = (640, 480)
+
 
 def capture_image():
     camera = PiCamera()
@@ -62,8 +65,6 @@ def upload(filename):
 
 
 def continuous_capture(status=0):
-    camera = PiCamera()
-    camera.resolution = (640, 480)
     camera.start_preview()
     sleep(2)
     if status == 0:
@@ -73,6 +74,7 @@ def continuous_capture(status=0):
             print("upload status code: {0}".format(upload_status))
             if upload_status != 200:
                 camera.close()
+                break
             sleep(float(get_image_capture_time()))  # wait some seconds
     elif status == 1:
         camera.stop_preview()
@@ -90,5 +92,5 @@ def stop():
     try:
         continuous_capture(1)
         return "Camera stopped"
-    except Exception :
+    except Exception:
         return "Cannot stop camera"
