@@ -1,16 +1,16 @@
+from datetime import datetime
 from time import sleep
 
 import requests
 from picamera import PiCamera
 
-from utils.utils import *
+from utils.utils import get_time_in_millis, image_file_format, get_server_url_upload, get_image_capture_time
 
 camera = PiCamera()
 camera.resolution = (640, 480)
 
 
 def capture_image():
-    camera = PiCamera()
     ##camera.rotation = 180
     camera.start_preview()
     sleep(5)
