@@ -1,4 +1,4 @@
-from utils.utils import *
+from utils import *
 from image_upload import *
 import requests
 

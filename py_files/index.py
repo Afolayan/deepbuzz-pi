@@ -1,4 +1,4 @@
-from utils.utils import *
+from utils import *
 
 print(current_time_string())
 print(get_time_in_millis())

@@ -1,6 +1,6 @@
 import time
 from datetime import datetime
-from utils.settings import *
+from settings import *
 from PIL import Image
 
 
