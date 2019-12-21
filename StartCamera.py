@@ -4,7 +4,8 @@ from time import sleep
 import requests
 from picamera import PiCamera
 
-from utils.utils import get_time_in_millis, image_file_format, get_server_url_upload, get_image_capture_time
+# from utils.utils import get_time_in_millis, image_file_format, get_server_url_upload, get_image_capture_time
+from utils.utils import *
 
 camera = PiCamera()
 camera.resolution = (640, 480)
