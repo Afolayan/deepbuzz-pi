@@ -89,7 +89,8 @@ def start():
 def stop():
     # stop capturing and uploading image
     try:
-        continuous_capture(1)
+        camera.stop_preview()
+        camera.close()
         return "Camera stopped"
     except Exception:
         return "Cannot stop camera"

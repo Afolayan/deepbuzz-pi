@@ -44,12 +44,17 @@ def video_feed():
 @app.route('/camera/start', methods=['POST'])
 def start_camera():
     StartCamera.start()
-    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    return json.dumps({'success': True, "function": "start"}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/camera/stop', methods=['POST'])
 def stop_camera():
-    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    message = StartCamera.stop()
+    message_ = {'success': True,
+                "function": "stop",
+                "message": message
+                }
+    return json.dumps(message_), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/location/start', methods=['POST'])
