@@ -37,7 +37,7 @@ def get_current_time():
 
 
 def upload(filename):
-    url = get_server_url_upload()
+    url = get_image_upload_url()
     print("url ==> {0}".format(url))
 
     headers = {'Content-Type': 'application/json'}

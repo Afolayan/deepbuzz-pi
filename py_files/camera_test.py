@@ -12,7 +12,7 @@ def create_upload_object(filename):
 
 def upload(upload_object):
     ## url = "{0}{1}".format(server_url, data_upload_url)
-    url = get_server_url_upload()
+    url = get_image_upload_url()
     print("url ==> {0}".format(url))
 
     headers = {'Content-Type': 'application/json'}

@@ -5,8 +5,6 @@ from time import sleep
 
 
 def upload(filename, isImage=True):
-    url = get_server_url_upload()
-    print("url ==> {0}".format(url))
 
     path_img = os.getcwd() + "/%s" % filename
     with open(path_img, "rb") as dataFile:
@@ -14,9 +12,12 @@ def upload(filename, isImage=True):
         datum = {'FileName': filename, 'DateCreated': get_current_time()}
         if isImage:
             files = {'ImageFile': (fullPathImage, dataFile, 'multipart/form-data', {'Expires': '0'})}
+            url = get_image_upload_url()
         else:
             files = {'VideoFile': (fullPathImage, dataFile, 'multipart/form-data', {'Expires': '0'})}
+            url = get_video_upload_url()
 
+        print("url ==> {0}".format(url))
         with requests.Session() as s:
             r = s.post(url, files=files, data=datum)
 
