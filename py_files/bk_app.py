@@ -1,10 +1,11 @@
-from flask import Flask, render_template, Response, json, request
+from flask import Flask, render_template, Response, json
 from datetime import datetime
-
-from RaspPiCamera import CameraOptions
+# import picamera
+# import cv2
+from py_files import StartCamera
 
 app = Flask(__name__)
-cameraOptions = CameraOptions()
+
 
 # vc = cv2.VideoCapture(0)
 
@@ -40,35 +41,29 @@ def video_feed():
 
 @app.route('/camera/start', methods=['POST'])
 def start_camera():
-    cameraOptions.multiple_image_capture()
+    StartCamera.start()
     return json.dumps({'success': True, "function": "start"}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/camera/stop', methods=['POST'])
 def stop_camera():
-    message = cameraOptions.stop_capture()
-    message_ = {
-        "success": True,
-        "function": "stop",
-        "message": message
-    }
+    message = StartCamera.stop()
+    message_ = {'success': True,
+                "function": "stop",
+                "message": message
+                }
     return json.dumps(message_), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/video/start', methods=['POST'])
-def start_video():
-    if request.json:
-        count = request.json["count"]
-    else:
-        count = 11
-    cameraOptions.multiple_video_capture(count)
-
+def start_camera():
+    StartCamera.start()
     return json.dumps({'success': True, "function": "start"}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/video/stop', methods=['POST'])
-def stop_video():
-    message = cameraOptions.stop_capture()
+def stop_camera():
+    message = StartCamera.stop()
     message_ = {'success': True,
                 "function": "stop",
                 "message": message
