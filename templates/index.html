@@ -16,6 +16,13 @@
         </a>
     </p>
 
+    <form action="/" id="videoForm">
+        <p>This module requires the number of times the video feed be sent</p>
+        Count<br>
+        <input type="number" name="count"><br>
+        <input type="submit" value="Start">
+    </form>
+
     <h3>Video Feed</h3>
     {#<img src="{{ url_for('video_feed') }}">#}
 
@@ -38,15 +45,37 @@
 
     function stopCamera() {
         $.ajax({
-        url: '/camera/stop',
-        type: 'POST',
-        success: function (response) {
-            console.log(response);
-        },
-        error: function (error) {
-            console.log(error);
-        }
+            url: '/camera/stop',
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+
+    $("#videoForm").submit(function (event) {
+        event.preventDefault();
+
+        let count = this.find('input[name="count"]').val();
+        startVideo(count)
     });
+
+    function startVideo(count) {
+        $.ajax({
+            url: '/video/start',
+            data: {"count": count},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
     }
 </script>
 </html>
