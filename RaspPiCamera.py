@@ -32,7 +32,7 @@ def get_current_time():
 
 
 class DeepBuzzException(object):
-    Exception
+    BaseException
 
     def message(self):
         pass
@@ -42,7 +42,8 @@ class CameraOptions(object):
     isImage = False
     isVideo = False
     camera = None
-    capture_time = get_image_capture_time()
+    ## capture_time = get_image_capture_time()
+    capture_time = 2
 
     def __init__(self):
         self.camera = PiCamera()
@@ -71,7 +72,7 @@ class CameraOptions(object):
                 if upload_status != 200:
                     self.stop_capture()
                     break
-                sleep(float(self.capture_time))  # wait some seconds
+                sleep(self.capture_time)  # wait some seconds
         except DeepBuzzException:
             self.stop_capture()
             return "Cannot complete this process."
@@ -103,7 +104,7 @@ class CameraOptions(object):
     def stop_capture(self):
         try:
             self.camera.stop_preview()
-            self.camera.close()
+            # self.camera.close()
             return "Camera closed successfully."
         except DeepBuzzException as exception:
             return "Cannot close camera: {0}".format(exception)
