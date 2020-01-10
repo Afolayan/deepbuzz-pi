@@ -95,8 +95,10 @@ class CameraOptions(object):
                 print("upload status code: {0}".format(upload_status))
 
                 if upload_status != 200:
+                    self.camera.stop_recording()
                     self.camera.close()
                     break
+            self.camera.stop_recording()
 
     def stop_capture(self):
         try:
