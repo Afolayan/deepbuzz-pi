@@ -67,7 +67,7 @@ def continuous_capture(status=0):
     camera.start_preview()
     sleep(2)
     if status == 0:
-        for filename in camera.capture_continuous('img{timestamp:%Y-%m-%d-%H-%M-%S}.jpg'):
+        for filename in camera.capture_continuous('img-{timestamp:%Y-%m-%d-%H-%M-%S}.jpg'):
             print('Captured %s' % filename)
             upload_status = upload(filename)
             print("upload status code: {0}".format(upload_status))

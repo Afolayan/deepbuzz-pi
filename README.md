@@ -12,3 +12,6 @@ Requirements, on RPi
 
 - check for website url at `https://afolayanseyi.pagekite.me`
 - follow the guide at `https://pagekite.net/support/quickstart/`
+
+Run Jupyter
+- jupyter notebook

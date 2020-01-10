@@ -41,6 +41,7 @@ def get_date_format():
 def get_image_capture_time():
     return image_capture_time if image_capture_time else 30
 
+
 def get_image_upload_time():
     return image_upload_time if image_upload_time else 30
 
@@ -52,5 +53,6 @@ def get_server_url():
 def get_server_url_with_hub():
     return "{0}{1}".format(server_url, device_hub_path)
 
+
 def get_server_url_upload():
-    return "{0}{1}".format(get_server_url(), "api/DataUpload/Image")
+    return "{0}{1}".format(get_server_url(), "api/ImageUpload")
