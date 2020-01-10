@@ -62,7 +62,7 @@ def start_video():
     # else:
     #     count = 11
     #cameraOptions.multiple_video_capture(2)
-    cameraOptions.single_image_capture()
+    cameraOptions.single_video_capture()
 
     return json.dumps({'success': True, "function": "start"}), 200, {'ContentType': 'application/json'}
 
