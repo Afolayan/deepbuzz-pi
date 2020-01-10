@@ -73,6 +73,7 @@ class CameraOptions(object):
                     break
                 sleep(float(self.capture_time))  # wait some seconds
         except DeepBuzzException:
+            self.stop_capture()
             return "Cannot complete this process."
 
     def single_video_capture(self):
