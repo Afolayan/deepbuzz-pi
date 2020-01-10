@@ -60,7 +60,7 @@
     $("#videoForm").submit(function (event) {
         event.preventDefault();
 
-        let count = this.find('input[name="count"]').val();
+        let count = $(this).find('input[name="count"]').val();
         startVideo(count)
     });
 
