@@ -19,7 +19,7 @@ def upload(filename, isImage=True):
             # timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
             # use this one file for all videos, so we wont clutter the pi
-            output_video = "/home/pi/Documents/deepbuzz/deepbuzz-pi/video_file.mp4"
+            output_video = "video_file.mp4"
             # call(["MP4Box", "-add", dataFile, output_video])
 
             os.system("MP4Box -add {} {}".format(dataFile, output_video))
@@ -55,6 +55,7 @@ class CameraOptions(object):
     camera = None
     ## capture_time = get_image_capture_time()
     capture_time = 2
+    timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
     def __init__(self):
         self.camera = PiCamera()
@@ -90,9 +91,11 @@ class CameraOptions(object):
 
     def single_video_capture(self):
         filename = 'my_video.h264'
+        print(" started now at {}".format(self.timestamp))
         self.camera.start_recording(filename)
         self.camera.wait_recording(30)
         self.camera.stop_recording()
+        print(" ended now at {}".format(self.timestamp))
         upload(filename, False)
 
     def multiple_video_capture(self, count):
