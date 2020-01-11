@@ -91,7 +91,7 @@ class CameraOptions(object):
     def single_video_capture(self):
         filename = 'my_video.h264'
         self.camera.start_recording(filename)
-        self.camera.wait_recording(self.capture_time)
+        self.camera.wait_recording(30)
         self.camera.stop_recording()
         upload(filename, False)
 
