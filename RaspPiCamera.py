@@ -1,4 +1,5 @@
 import requests
+from gevent.subprocess import call
 from picamera import PiCamera
 from utils import *
 from time import sleep
@@ -14,6 +15,9 @@ def upload(filename, isImage=True):
             files = {'ImageFile': (fullPathImage, dataFile, 'multipart/form-data', {'Expires': '0'})}
             url = get_image_upload_url()
         else:
+            timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
+            output_video = "/home/pi/Documents/deepbuzz/deepbuzz-pi/{}.mp4".format(timestamp)
+            call(["MP4Box", "-add", dataFile, output_video])
             files = {'VideoFile': (fullPathImage, dataFile, 'multipart/form-data', {'Expires': '0'})}
             url = get_video_upload_url()
 
