@@ -19,13 +19,13 @@ def upload(filename, isImage=True):
             # timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
             # use this one file for all videos, so we wont clutter the pi
-            output_video = "video_file.mp4"
-            # call(["MP4Box", "-add", dataFile, output_video])
-
-            os.system("MP4Box -add {} {}".format(dataFile, output_video))
-            files = {'VideoFile': (output_video, output_video, 'multipart/form-data', {'Expires': '0'})}
-            print(files)
-            url = get_video_upload_url()
+            output_video = "/home/pi/Documents/deepbuzz/deepbuzz-pi/video_file.mp4"
+            fullPathVideo = os.path.basename(output_video)
+            with open(output_video, 'r+') as outputVideo:
+                os.system("MP4Box -add {} {}".format(dataFile, outputVideo))
+                files = {'VideoFile': (fullPathVideo, outputVideo, 'multipart/form-data', {'Expires': '0'})}
+                print("files is {}".format(files))
+                url = get_video_upload_url()
 
         print("url ==> {0}".format(url))
         with requests.Session() as s:
