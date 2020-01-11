@@ -16,13 +16,15 @@ def upload(filename, isImage=True):
             files = {'ImageFile': (fullPathImage, dataFile, 'multipart/form-data', {'Expires': '0'})}
             url = get_image_upload_url()
         else:
-            timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
-            output_video = "/home/pi/Documents/deepbuzz/deepbuzz-pi/{}.mp4".format(timestamp)
+            # timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
+
+            # use this one file for all videos, so we wont clutter the pi
+            output_video = "/home/pi/Documents/deepbuzz/deepbuzz-pi/video_file.mp4"
             # call(["MP4Box", "-add", dataFile, output_video])
             print(dataFile)
             print(output_video)
             os.system("MP4Box -add {} {}".format(dataFile, output_video))
-            files = {'VideoFile': (fullPathImage, dataFile, 'multipart/form-data', {'Expires': '0'})}
+            files = {'VideoFile': (fullPathImage, output_video, 'multipart/form-data', {'Expires': '0'})}
             url = get_video_upload_url()
 
         print("url ==> {0}".format(url))
