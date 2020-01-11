@@ -23,7 +23,7 @@ def upload(filename, isImage=True):
             # call(["MP4Box", "-add", dataFile, output_video])
 
             os.system("MP4Box -add {} {}".format(dataFile, output_video))
-            files = {'VideoFile': (fullPathImage, output_video, 'multipart/form-data', {'Expires': '0'})}
+            files = {'VideoFile': (output_video, output_video, 'multipart/form-data', {'Expires': '0'})}
             print(files)
             url = get_video_upload_url()
 
