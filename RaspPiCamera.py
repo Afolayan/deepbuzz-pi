@@ -3,6 +3,7 @@ from gevent.subprocess import call
 from picamera import PiCamera
 from utils import *
 from time import sleep
+import os
 
 
 def upload(filename, isImage=True):
@@ -17,7 +18,10 @@ def upload(filename, isImage=True):
         else:
             timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
             output_video = "/home/pi/Documents/deepbuzz/deepbuzz-pi/{}.mp4".format(timestamp)
-            call(["MP4Box", "-add", dataFile, output_video])
+            # call(["MP4Box", "-add", dataFile, output_video])
+            print(dataFile)
+            print(output_video)
+            os.system("MP4Box -add {} {}".format(dataFile, output_video))
             files = {'VideoFile': (fullPathImage, dataFile, 'multipart/form-data', {'Expires': '0'})}
             url = get_video_upload_url()
 

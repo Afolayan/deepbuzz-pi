@@ -7,13 +7,6 @@ Click==7.0
 distro==1.4.0
 Flask==1.1.1
 gevent==1.4.0
-google-api-core==1.14.0
-google-auth==1.6.3
-google-cloud-core==1.0.2
-google-cloud-storage==1.17.0
-google-compute-engine==2.8.13
-google-resumable-media==0.3.2
-googleapis-common-protos==1.6.0
 greenlet==0.4.15
 idna==2.8
 itsdangerous==1.1.0
