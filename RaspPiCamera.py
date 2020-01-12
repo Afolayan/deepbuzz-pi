@@ -92,11 +92,14 @@ class CameraOptions(object):
     def single_video_capture(self):
         filename = 'my_video.h264'
         print(" started now at {}".format(self.timestamp))
+        self.camera.start_preview()
         self.camera.start_recording(filename)
-        self.camera.wait_recording(30)
+        sleep(30)
         self.camera.stop_recording()
+        self.camera.stop_preview()
         print(" ended now at {}".format(self.timestamp))
         upload(filename, False)
+
 
     def multiple_video_capture(self, count):
         if count == 1:
