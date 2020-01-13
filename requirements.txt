@@ -33,3 +33,4 @@ webapp2==2.5.2
 websocket-client==0.56.0
 websockets==8.1
 Werkzeug==0.16.0
+uwsgi==2.0.18

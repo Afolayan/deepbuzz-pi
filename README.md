@@ -15,3 +15,7 @@ Requirements, on RPi
 
 Run Jupyter
 - jupyter notebook
+
+Run this to activate virtual environment
+- python3.7 -m venv venv
+- source venv/bin/activate
