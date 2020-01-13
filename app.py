@@ -8,6 +8,10 @@ from utils import get_device_registration_url, get_device_name
 from RaspPiCamera import CameraOptions, get_current_time
 
 app = Flask(__name__)
+app.config['SESSION_TYPE'] = 'memcached'
+app.config['SECRET_KEY'] = 'somecrazysecretkeyishere'
+sess = Session()
+
 cameraOptions = CameraOptions()
 device_session = Session()
 # vc = cv2.VideoCapture(0)
@@ -106,6 +110,6 @@ def stop_location():
 
 
 if __name__ == '__main__':
-    app.secret_key = "somecrazysecretkeyishere"
+    # app.secret_key = "somecrazysecretkeyishere"
     app.config['SESSION_TYPE'] = 'filesystem'
     app.run(host='0.0.0.0', debug=True, threaded=True, port=80)
