@@ -21,7 +21,7 @@ def index():
         data = {'DeviceName': get_device_name(), 'DateCreated': get_current_time()}
         r = s.post(register_url, data=data)
         print("registration response is ".format(r.status_code))
-        response = r.json()
+        response = r.raw
 
     templateData = {
         'title': 'HELLO!',
