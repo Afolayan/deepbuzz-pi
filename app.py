@@ -22,7 +22,7 @@ def index():
         headers = {"Content-Type": "application/json"}
         r = s.post(register_url, headers=headers, data=data)
         json_response = r.json()
-        print("json response == "+json.dump(json_response))
+        print("json response == "+json.dumps(json_response))
         print("json response == "+json_response["data"])
         print("json response == "+json_response["data"].ipAddress)
 
