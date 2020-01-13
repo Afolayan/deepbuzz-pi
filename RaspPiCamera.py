@@ -58,11 +58,13 @@ class CameraOptions(object):
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
     def __init__(self):
-        from picamera import PiCamera
-        self.camera = PiCamera()
-        self.camera.resolution = (640, 480)
+        # from picamera import PiCamera
+        # self.camera = PiCamera()
+        # self.camera.resolution = (640, 480)
+        pass
 
     def single_image_capture(self):
+        self.init_camera()
         self.camera.start_preview()
         sleep(2)
         filename = "foo.jpg"
@@ -73,6 +75,7 @@ class CameraOptions(object):
         sleep(float(get_image_capture_time()))  # wait some seconds
 
     def multiple_image_capture(self):
+        self.init_camera()
         self.camera.start_preview()
         sleep(2)
         try:
@@ -91,6 +94,7 @@ class CameraOptions(object):
             return "Cannot complete this process."
 
     def single_video_capture(self):
+        self.init_camera()
         filename = 'my_video.h264'
         print(" started now at {}".format(self.timestamp))
         self.camera.start_preview()
@@ -101,11 +105,12 @@ class CameraOptions(object):
         print(" ended now at {}".format(self.timestamp))
         upload(filename, False)
 
-
     def multiple_video_capture(self, count):
         if count == 1:
             self.single_video_capture()
         else:
+            self.init_camera()
+            self.camera.start_preview()
             for filename in \
                     self.camera.record_sequence('%d.h264' % i for i in range(1, count)):
                 self.camera.wait_recording(self.capture_time)
@@ -126,3 +131,9 @@ class CameraOptions(object):
             return "Camera closed successfully."
         except DeepBuzzException as exception:
             return "Cannot close camera: {0}".format(exception)
+
+    def init_camera(self):
+        if not self.camera:
+            from picamera import PiCamera
+            self.camera = PiCamera()
+            self.camera.resolution = (640, 480)
