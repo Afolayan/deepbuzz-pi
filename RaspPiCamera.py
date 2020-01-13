@@ -27,14 +27,14 @@ def upload(filename, isImage=True):
                 print("files is {}".format(files))
                 url = get_video_upload_url()
 
-        print("url ==> {0}".format(url))
-        with requests.Session() as s:
-            r = s.post(url, files=files, data=datum)
+                print("url ==> {0}".format(url))
+                with requests.Session() as s:
+                    r = s.post(url, files=files, data=datum)
 
-            print("content ==> {0}".format(r.content))
-            print("json ==> {0}".format(r.json))
+                    print("content ==> {0}".format(r.content))
+                    print("json ==> {0}".format(r.json))
 
-            return r.status_code
+                    return r.status_code
 
 
 def get_current_time():
