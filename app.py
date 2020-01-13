@@ -20,15 +20,15 @@ def index():
     timeString = now.strftime("%Y-%m-%d %H:%M")
 
     register_url = get_device_registration_url()
-    with device_session:
+    with requests.Session() as s:
         data = {'DeviceName': get_device_name(), 'DateCreated': get_current_time()}
         headers = {"Content-Type": "application/json"}
-        r = device_session.post(register_url, headers=headers, data=data)
+        r = s.post(register_url, headers=headers, data=data)
 
         json_response = r.json()
         print("json response == " + json_response["data"]["ipAddress"])
 
-    device_session['ip_address'] = json_response["data"]["ipAddress"]
+    session['ip_address'] = json_response["data"]["ipAddress"]
 
     templateData = {
         'title': 'HELLO!',
