@@ -1,12 +1,15 @@
 import requests
 from flask import Flask, render_template, Response, json, session
 from datetime import datetime
+
+from requests import Session
+
 from utils import get_device_registration_url, get_device_name
 from RaspPiCamera import CameraOptions, get_current_time
 
 app = Flask(__name__)
 cameraOptions = CameraOptions()
-
+device_session = Session()
 # vc = cv2.VideoCapture(0)
 
 
@@ -17,15 +20,15 @@ def index():
     timeString = now.strftime("%Y-%m-%d %H:%M")
 
     register_url = get_device_registration_url()
-    with requests.Session() as s:
+    with device_session:
         data = {'DeviceName': get_device_name(), 'DateCreated': get_current_time()}
         headers = {"Content-Type": "application/json"}
-        r = s.post(register_url, headers=headers, data=data)
+        r = device_session.post(register_url, headers=headers, data=data)
 
         json_response = r.json()
         print("json response == " + json_response["data"]["ipAddress"])
 
-    session['ip_address'] = json_response["data"]["ipAddress"]
+    device_session['ip_address'] = json_response["data"]["ipAddress"]
 
     templateData = {
         'title': 'HELLO!',
@@ -103,4 +106,6 @@ def stop_location():
 
 
 if __name__ == '__main__':
+    app.secret_key = "somecrazysecretkeyishere"
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.run(host='0.0.0.0', debug=True, threaded=True, port=80)
