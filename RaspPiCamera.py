@@ -1,6 +1,6 @@
 import requests
 from gevent.subprocess import call
-from picamera import PiCamera
+
 from utils import *
 from time import sleep
 import os
@@ -58,6 +58,7 @@ class CameraOptions(object):
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
     def __init__(self):
+        from picamera import PiCamera
         self.camera = PiCamera()
         self.camera.resolution = (640, 480)
 

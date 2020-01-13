@@ -20,4 +20,8 @@ Run this to activate virtual environment
 - python3.7 -m venv venv
 - source venv/bin/activate
 
-sudo systemctl restart deepbuzz
+# sudo systemctl restart deepbuzz
+
+#To run flask on local IP
+- enter venv with `source venv/bin/activate`
+- flask run --host 0.0.0.0
