@@ -15,17 +15,19 @@ def index():
     """Video streaming"""
     now = datetime.now()
     timeString = now.strftime("%Y-%m-%d %H:%M")
-    templateData = {
-        'title': 'HELLO!',
-        'time': timeString
-    }
 
     register_url = get_device_registration_url()
     with requests.Session() as s:
         data = {'DeviceName': get_device_name(), 'DateCreated': get_current_time()}
         r = s.post(register_url, data=data)
         print("registration response is ".format(r.status_code))
+        response = r.json()
 
+    templateData = {
+        'title': 'HELLO!',
+        'time': timeString,
+        'response': response
+    }
     return render_template('index.html', **templateData)
 
 
