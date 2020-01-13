@@ -21,9 +21,9 @@ def index():
         data = {'DeviceName': get_device_name(), 'DateCreated': get_current_time()}
         headers = {"Content-Type": "application/json"}
         r = s.post(register_url, headers=headers, data=data)
-        json_response = r.json()
-        print("json response == "+json.dumps(json_response))
-        print("json response == "+json_response["data"])
+
+        json_response = json.dumps(r.json())
+        print("json response == " + json_response)
         print("json response == "+json_response["data"].ipAddress)
 
     session['ip_address'] = json_response.data.ipAddress
