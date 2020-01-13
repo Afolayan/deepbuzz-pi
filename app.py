@@ -19,9 +19,9 @@ def index():
     register_url = get_device_registration_url()
     with requests.Session() as s:
         data = {'DeviceName': get_device_name(), 'DateCreated': get_current_time()}
-        r = s.post(register_url, data=data)
-        print("registration response is ".format(r.status_code))
-        response = r.raw
+        headers = {"Content-Type": "application/json"}
+        r = s.post(register_url, headers=headers, data=data)
+        response = r.json()
 
     templateData = {
         'title': 'HELLO!',

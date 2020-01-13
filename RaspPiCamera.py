@@ -19,7 +19,7 @@ def upload(filename, isImage=True):
             # timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
             # use this one file for all videos, so we wont clutter the pi
-            output_video = "/home/pi/Documents/deepbuzz/deepbuzz-pi/video_file.mp4"
+            output_video = "/home/pi/video_file.mp4"
             fullPathVideo = os.path.basename(output_video)
             with open(output_video, 'r+') as outputVideo:
                 os.system("MP4Box -add {} {}".format(dataFile, outputVideo))
@@ -53,7 +53,7 @@ class CameraOptions(object):
     isImage = False
     isVideo = False
     camera = None
-    ## capture_time = get_image_capture_time()
+    # capture_time = get_image_capture_time()
     capture_time = 2
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
