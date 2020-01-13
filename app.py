@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, render_template, Response, json, request
+from flask import Flask, render_template, Response, json, session
 from datetime import datetime
 from utils import get_device_registration_url, get_device_name
 from RaspPiCamera import CameraOptions, get_current_time
@@ -21,12 +21,15 @@ def index():
         data = {'DeviceName': get_device_name(), 'DateCreated': get_current_time()}
         headers = {"Content-Type": "application/json"}
         r = s.post(register_url, headers=headers, data=data)
-        response = r.json()
+        json_response = r.json()
+
+    session['ip_address'] = json_response.data.ipAddress
 
     templateData = {
         'title': 'HELLO!',
         'time': timeString,
-        'response': response
+        'response': json_response,
+        'ipaddress': json_response.data.ipAddress
     }
     return render_template('index.html', **templateData)
 
