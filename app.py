@@ -38,8 +38,10 @@ def index():
         'title': 'HELLO!',
         'time': timeString,
         'response': json_response,
-        'ipaddress': json_response.data.ipAddress
+        'ipaddress': json_response["data"]["ipAddress"]
     }
+
+    print(session)
     return render_template('index.html', **templateData)
 
 
