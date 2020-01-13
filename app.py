@@ -22,6 +22,9 @@ def index():
         headers = {"Content-Type": "application/json"}
         r = s.post(register_url, headers=headers, data=data)
         json_response = r.json()
+        print("json response == "+json_response)
+        print("json response == "+json_response["data"])
+        print("json response == "+json_response["data"].ipAddress)
 
     session['ip_address'] = json_response.data.ipAddress
 
