@@ -19,3 +19,5 @@ Run Jupyter
 Run this to activate virtual environment
 - python3.7 -m venv venv
 - source venv/bin/activate
+
+sudo systemctl restart deepbuzz
