@@ -13,3 +13,4 @@ device_hub_path = os.getenv("DEVICE_HUB_POST_FIX")
 image_file_format = os.getenv("IMAGE_FILE_FORMAT")
 maps_api_key = os.getenv("MAPS_API_KEY")
 google_maps_base_url = os.getenv("GOOGLE_MAPS_BASE_URL")
+device_name = "RaspBerryPi"

@@ -54,9 +54,17 @@ def get_server_url_with_hub():
     return "{0}{1}".format(server_url, device_hub_path)
 
 
+def get_device_registration_url():
+    return "{0}{1}".format(get_server_url(), "api/register")
+
+
 def get_image_upload_url():
     return "{0}{1}".format(get_server_url(), "api/ImageUpload")
 
 
 def get_video_upload_url():
     return "{0}{1}".format(get_server_url(), "api/VideoUpload")
+
+
+def get_device_name():
+    return device_name
