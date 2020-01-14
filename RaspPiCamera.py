@@ -16,6 +16,14 @@ def upload(filename, isImage=True):
         if isImage:
             files = {'ImageFile': (fullPathImage, dataFile, 'multipart/form-data', {'Expires': '0'})}
             url = get_image_upload_url()
+
+            with requests.Session() as s:
+                r = s.post(url, files=files, data=datum)
+
+                print("content ==> {0}".format(r.content))
+                print("json ==> {0}".format(r.json))
+
+                return r.status_code
         else:
             # timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
