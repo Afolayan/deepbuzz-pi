@@ -31,6 +31,7 @@ def upload(filename, isImage=True):
             output_video = "/home/pi/video_file.mp4"
             fullPathVideo = os.path.basename(output_video)
             with open(output_video, 'r+') as outputVideo:
+                print("MP4Box -add {} {}".format(dataFile, outputVideo))
                 os.system("MP4Box -add {} {}".format(dataFile, outputVideo))
                 files = {'VideoFile': (output_video, outputVideo, 'multipart/form-data', {'Expires': '0'})}
                 print("files is {}".format(files))
