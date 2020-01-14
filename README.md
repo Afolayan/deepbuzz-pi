@@ -24,4 +24,4 @@ Run this to activate virtual environment
 
 #To run flask on local IP
 - enter venv with `source venv/bin/activate`
-- flask run --host 0.0.0.0
+- flask run --host 0.0.0.0 --debug=True

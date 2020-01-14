@@ -26,27 +26,31 @@ def upload(filename, isImage=True):
 
                 return r.status_code
     else:
-        with open(file_path, "rb") as dataFile:
-            # use this one file for all videos, so we wont clutter the pi
-            output_video = os.getcwd() + "/video.mp4"
-            print("output_video is "+output_video)
+        # use this one file for all videos, so we wont clutter the pi
+        print("MP4Box -add {} {}".format("my_video.h264", "video.mp4"))
+        os.system("MP4Box -add my_video.h264 video.mp4")
+        output_video = os.getcwd() + "/video.mp4"
+        print("output_video is " + output_video)
+
+        with open(output_video, "rb") as dataFile:
 
             fullPathVideo = os.path.basename(output_video)
-            with open(output_video, 'r+') as outputVideo:
-                print("MP4Box -add {} {}".format("my_video.h264", "video.mp4"))
-                os.system("MP4Box -add my_video.h264 video.mp4")
-                files = {'VideoFile': (fullPathVideo, outputVideo, 'multipart/form-data', {'Expires': '0'})}
-                print("files is {}".format(files))
-                url = get_video_upload_url()
+            files = {'VideoFile': (fullPathVideo, dataFile, 'multipart/form-data', {'Expires': '0'})}
+            print("files is {}".format(files))
+            url = get_video_upload_url()
 
-                print("url ==> {0}".format(url))
-                with requests.Session() as s:
-                    r = s.post(url, files=files, data=datum)
+            print("url ==> {0}".format(url))
+            with requests.Session() as s:
+                r = s.post(url, files=files, data=datum)
 
-                    print("content ==> {0}".format(r.content))
-                    print("json ==> {0}".format(r.json))
+                print("content ==> {0}".format(r.content))
+                print("json ==> {0}".format(r.json))
 
-                    return r.status_code
+                # remove the existing video file and recreate a new one
+                os.system("rm video.mp4")
+                os.system("touch video.mp4")
+
+                return r.status_code
 
 # path_img = os.getcwd() + "/%s" % filename
 #     with open(path_img, "rb") as dataFile:
@@ -71,7 +75,7 @@ def upload(filename, isImage=True):
 #             fullPathVideo = os.path.basename(output_video)
 #             with open(output_video, 'r+') as outputVideo:
 #                 print("MP4Box -add {} {}".format(dataFile, outputVideo))
-#                 os.system("MP4Box -add {} {}".format(dataFile, outputVideo))
+#                 os.system("MP4Box -add my_video.h264 video.mp4")
 #                 files = {'VideoFile': (output_video, outputVideo, 'multipart/form-data', {'Expires': '0'})}
 #                 print("files is {}".format(files))
 #                 url = get_video_upload_url()
