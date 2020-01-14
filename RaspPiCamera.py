@@ -8,7 +8,6 @@ import os
 
 
 def upload(filename, isImage=True):
-
     file_path = os.getcwd() + "/%s" % filename
     datum = {'FileName': filename, 'DateCreated': get_current_time(), 'IpAddress': session["ip_address"]}
 
@@ -130,19 +129,23 @@ class CameraOptions(object):
             self.single_video_capture()
         else:
             self.init_camera()
-            self.camera.start_preview()
-            for filename in \
-                    self.camera.record_sequence('{0}.h264'.format(str(i)) for i in range(1, count)):
-                self.camera.wait_recording(self.capture_time)
+            # self.camera.start_preview()
+            # for filename in \
+            #         self.camera.record_sequence('{0}.h264'.format(str(i)) for i in range(1, count)):
+            #     self.camera.wait_recording(self.capture_time)
+            #
+            #     upload_status = upload(filename, False)
+            #     print("upload status code: {0}".format(upload_status))
+            #
+            #     if upload_status != 200:
+            #         self.camera.stop_recording()
+            #         self.camera.close()
+            #         break
+            # self.camera.stop_recording()
 
-                upload_status = upload(filename, False)
-                print("upload status code: {0}".format(upload_status))
-
-                if upload_status != 200:
-                    self.camera.stop_recording()
-                    self.camera.close()
-                    break
-            self.camera.stop_recording()
+            for i in range(1, count):
+                self.single_video_capture()
+                sleep(5)
 
     def stop_capture(self):
         try:
