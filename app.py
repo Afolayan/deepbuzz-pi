@@ -83,14 +83,13 @@ def stop_camera():
 
 @app.route('/video/start', methods=['POST'])
 def start_video():
-    print(request.json)
+    count = 2
     if request.json:
         count = request.json['count']
-    else:
-        count = 11
+
     print("count: " + str(count))
-    # cameraOptions.multiple_video_capture(2)
-    cameraOptions.single_video_capture()
+    cameraOptions.multiple_video_capture(count)
+    # cameraOptions.single_video_capture()
 
     return json.dumps({'success': True, "function": "start"}), 200, {'ContentType': 'application/json'}
 

@@ -27,8 +27,12 @@ def upload(filename, isImage=True):
                 return r.status_code
     else:
         # use this one file for all videos, so we wont clutter the pi
-        print("MP4Box -add {} {}".format("my_video.h264", "video.mp4"))
-        os.system("MP4Box -add my_video.h264 video.mp4")
+        print("MP4Box -add {0} {1}".format(filename, "video.mp4"))
+        os.system("MP4Box -add {0} video.mp4".format(filename))
+
+        # print("MP4Box -add {} {}".format("my_video.h264", "video.mp4"))
+        # os.system("MP4Box -add my_video.h264 video.mp4")
+
         output_video = os.getcwd() + "/video.mp4"
         print("output_video is " + output_video)
 
@@ -51,43 +55,6 @@ def upload(filename, isImage=True):
                 os.system("touch video.mp4")
 
                 return r.status_code
-
-# path_img = os.getcwd() + "/%s" % filename
-#     with open(path_img, "rb") as dataFile:
-#         fullPathImage = os.path.basename(path_img)
-#         datum = {'FileName': filename, 'DateCreated': get_current_time(), 'IpAddress': session["ip_address"]}
-#         if isImage:
-#             files = {'ImageFile': (fullPathImage, dataFile, 'multipart/form-data', {'Expires': '0'})}
-#             url = get_image_upload_url()
-#
-#             with requests.Session() as s:
-#                 r = s.post(url, files=files, data=datum)
-#
-#                 print("content ==> {0}".format(r.content))
-#                 print("json ==> {0}".format(r.json))
-#
-#                 return r.status_code
-#         else:
-#             # timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
-#
-#             # use this one file for all videos, so we wont clutter the pi
-#             output_video = "/home/pi/video_file.mp4"
-#             fullPathVideo = os.path.basename(output_video)
-#             with open(output_video, 'r+') as outputVideo:
-#                 print("MP4Box -add {} {}".format(dataFile, outputVideo))
-#                 os.system("MP4Box -add my_video.h264 video.mp4")
-#                 files = {'VideoFile': (output_video, outputVideo, 'multipart/form-data', {'Expires': '0'})}
-#                 print("files is {}".format(files))
-#                 url = get_video_upload_url()
-#
-#                 print("url ==> {0}".format(url))
-#                 with requests.Session() as s:
-#                     r = s.post(url, files=files, data=datum)
-#
-#                     print("content ==> {0}".format(r.content))
-#                     print("json ==> {0}".format(r.json))
-#
-#                     return r.status_code
 
 
 def get_current_time():
