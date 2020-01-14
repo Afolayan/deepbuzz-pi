@@ -83,11 +83,9 @@ def stop_camera():
 
 @app.route('/video/start', methods=['POST'])
 def start_video():
-    if not request.json or not 'count' in request.json:
-        abort(400)
-
+    print(request.json)
     if request.json:
-        count = request.json["count"]
+        count = request.json['count']
     else:
         count = 11
     print("count: " + str(count))

@@ -67,7 +67,8 @@
     function startVideo(count) {
         $.ajax({
             url: '/video/start',
-            data: {"count": count},
+            data: JSON.stringify({"count": count}, null, '\t'),
+            contentType: 'application/json;charset=UTF-8',
             type: 'POST',
             success: function (response) {
                 console.log(response);
