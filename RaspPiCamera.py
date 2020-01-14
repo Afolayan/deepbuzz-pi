@@ -29,10 +29,12 @@ def upload(filename, isImage=True):
         with open(file_path, "rb") as dataFile:
             # use this one file for all videos, so we wont clutter the pi
             output_video = os.getcwd() + "/video.mp4"
+            print("output_video is "+output_video)
+
             fullPathVideo = os.path.basename(output_video)
             with open(output_video, 'r+') as outputVideo:
-                print("MP4Box -add {} {}".format(dataFile, outputVideo))
-                os.system("MP4Box -add {} {}".format(dataFile, outputVideo))
+                print("MP4Box -add {} {}".format("my_video.h264", "video.mp4"))
+                os.system("MP4Box -add my_video.h264 video.mp4")
                 files = {'VideoFile': (fullPathVideo, outputVideo, 'multipart/form-data', {'Expires': '0'})}
                 print("files is {}".format(files))
                 url = get_video_upload_url()
