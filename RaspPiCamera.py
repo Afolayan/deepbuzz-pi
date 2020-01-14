@@ -1,4 +1,5 @@
 import requests
+from flask import session
 from gevent.subprocess import call
 
 from utils import *
@@ -11,7 +12,7 @@ def upload(filename, isImage=True):
     path_img = os.getcwd() + "/%s" % filename
     with open(path_img, "rb") as dataFile:
         fullPathImage = os.path.basename(path_img)
-        datum = {'FileName': filename, 'DateCreated': get_current_time()}
+        datum = {'FileName': filename, 'DateCreated': get_current_time(), 'IpAddress': session["ip_address"]}
         if isImage:
             files = {'ImageFile': (fullPathImage, dataFile, 'multipart/form-data', {'Expires': '0'})}
             url = get_image_upload_url()
