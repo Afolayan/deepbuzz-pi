@@ -91,7 +91,7 @@ def start_video():
     cameraOptions.multiple_video_capture(count)
     # cameraOptions.single_video_capture()
 
-    yield json.dumps({'success': True, "function": "start"}), 200, {'ContentType': 'application/json'}
+    return json.dumps({'success': True, "function": "start"}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/video/stop', methods=['POST'])
