@@ -85,7 +85,7 @@ def start_video():
         count = request.json["count"]
     else:
         count = 11
-    print("count: "+count)
+    print("count: "+str(count))
     # cameraOptions.multiple_video_capture(2)
     cameraOptions.single_video_capture()
 
