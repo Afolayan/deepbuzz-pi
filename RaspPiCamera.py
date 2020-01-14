@@ -73,7 +73,7 @@ class CameraOptions(object):
     isVideo = False
     camera = None
     # capture_time = get_image_capture_time()
-    capture_time = 2
+    capture_time = 10
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
     def __init__(self):
