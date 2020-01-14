@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, render_template, Response, json, session, request
+from flask import Flask, render_template, Response, json, session, request, abort
 from datetime import datetime
 
 from requests import Session
@@ -14,6 +14,8 @@ sess = Session()
 
 cameraOptions = CameraOptions()
 device_session = Session()
+
+
 # vc = cv2.VideoCapture(0)
 
 
@@ -81,11 +83,14 @@ def stop_camera():
 
 @app.route('/video/start', methods=['POST'])
 def start_video():
+    if not request.json or not 'count' in request.json:
+        abort(400)
+
     if request.json:
         count = request.json["count"]
     else:
         count = 11
-    print("count: "+str(count))
+    print("count: " + str(count))
     # cameraOptions.multiple_video_capture(2)
     cameraOptions.single_video_capture()
 
