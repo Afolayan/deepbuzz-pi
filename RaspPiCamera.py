@@ -144,6 +144,7 @@ class CameraOptions(object):
             # self.camera.stop_recording()
 
             for i in range(1, int(count)):
+                print("\n\ni is {0}".format(i))
                 self.single_video_capture()
                 sleep(5)
 
