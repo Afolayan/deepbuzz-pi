@@ -115,6 +115,7 @@ class CameraOptions(object):
     def single_video_capture(self):
         self.init_camera()
         filename = 'my_video.h264'
+        yield "video streaming started"
         print(" started now at {}".format(self.timestamp))
         self.camera.start_preview()
         self.camera.start_recording(filename)
@@ -144,6 +145,8 @@ class CameraOptions(object):
             # self.camera.stop_recording()
 
             for i in range(1, count):
+                if i == 1:
+                    yield "video streaming started"
                 self.single_video_capture()
                 sleep(5)
 
