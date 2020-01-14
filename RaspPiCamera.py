@@ -132,7 +132,7 @@ class CameraOptions(object):
             self.init_camera()
             self.camera.start_preview()
             for filename in \
-                    self.camera.record_sequence('%d.h264' % i for i in range(1, count)):
+                    self.camera.record_sequence('{0}.h264'.format(str(i)) for i in range(1, count)):
                 self.camera.wait_recording(self.capture_time)
 
                 upload_status = upload(filename, False)
