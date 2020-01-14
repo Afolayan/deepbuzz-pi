@@ -126,6 +126,7 @@ class CameraOptions(object):
 
     def multiple_video_capture(self, count):
         if count == 1:
+            print("\n\ni is single_video_capture")
             self.single_video_capture()
         else:
             self.init_camera()
