@@ -91,7 +91,7 @@ def start_video():
     #cameraOptions.multiple_video_capture(count)
     # cameraOptions.single_video_capture()
 
-    yield json.dumps(
+    yield Response(
         {
             'success': True,
             'function': cameraOptions.multiple_video_capture(count)
