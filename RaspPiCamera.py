@@ -142,7 +142,7 @@ class CameraOptions(object):
                     self.camera.stop_recording()
                     self.camera.close()
                     break
-            self.camera.stop_recording()
+            #self.camera.stop_recording()
 
             # for i in range(1, int(count)):
             #     print("\n\ni is {0}".format(i))
