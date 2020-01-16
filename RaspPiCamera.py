@@ -61,13 +61,6 @@ def get_current_time():
     return now
 
 
-class DeepBuzzException(object):
-    BaseException
-
-    def message(self):
-        pass
-
-
 class CameraOptions(object):
     isImage = False
     isVideo = False
@@ -108,7 +101,7 @@ class CameraOptions(object):
                     self.stop_capture()
                     break
                 sleep(self.capture_time)  # wait some seconds
-        except DeepBuzzException:
+        except Exception as e:
             self.stop_capture()
             return "Cannot complete this process."
 
@@ -154,7 +147,7 @@ class CameraOptions(object):
             self.camera.stop_preview()
             # self.camera.close()
             return "Camera closed successfully."
-        except DeepBuzzException as exception:
+        except Exception as exception:
             return "Cannot close camera: {0}".format(exception)
 
     def init_camera(self):
