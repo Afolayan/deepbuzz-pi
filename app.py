@@ -1,3 +1,5 @@
+import os
+
 import requests
 from flask import Flask, render_template, Response, json, session, request, abort
 from datetime import datetime
@@ -6,6 +8,7 @@ from requests import Session
 
 from utils import get_device_registration_url, get_device_name
 from RaspPiCamera import CameraOptions, get_current_time
+from signalr_commands import SignalRCommands
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'memcached'
@@ -14,6 +17,8 @@ sess = Session()
 
 cameraOptions = CameraOptions()
 device_session = Session()
+
+commandsHub = SignalRCommands()
 
 
 # vc = cv2.VideoCapture(0)
@@ -36,6 +41,10 @@ def index():
 
     session['ip_address'] = json_response["data"]["ipAddress"]
 
+    # start signalr connection script
+    # os.system("python3 signalr_commands.py")
+    commandsHub.setup_connection(onReceivedCommand)
+
     templateData = {
         'title': 'HELLO!',
         'time': timeString,
@@ -45,6 +54,22 @@ def index():
 
     print(session)
     return render_template('index.html', **templateData)
+
+
+def onReceivedCommand(message):
+    print("item: ", message[0])
+    print("command: ", message[1])
+
+    if message[0] == 'camera':
+        if message[1] == 'start':
+            start_camera()
+        else:
+            stop_camera()
+    elif message[1] == 'video':
+        if message[1] == 'start':
+            start_video()
+        else:
+            stop_video()
 
 
 def gen():
@@ -66,12 +91,14 @@ def video_feed():
 
 @app.route('/camera/start', methods=['POST'])
 def start_camera():
+    print("starting camera")
     cameraOptions.multiple_image_capture()
     return json.dumps({'success': True, "function": "start"}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/camera/stop', methods=['POST'])
 def stop_camera():
+    print("stopping camera")
     message = cameraOptions.stop_capture()
     message_ = {
         "success": True,
@@ -83,6 +110,7 @@ def stop_camera():
 
 @app.route('/video/start', methods=['POST'])
 def start_video():
+    print("starting video")
     count = 2
     if request.json:
         count = request.json['count']
@@ -96,6 +124,7 @@ def start_video():
 
 @app.route('/video/stop', methods=['POST'])
 def stop_video():
+    print("stopping video")
     message = cameraOptions.stop_capture()
     message_ = {'success': True,
                 "function": "stop",
