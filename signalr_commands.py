@@ -36,7 +36,6 @@ class SignalRCommands(threading.Thread):
             "reconnect_interval": 5,
             "max_attempts": 5
         }).build()
-        self.setup_connection(onReceivedMessage)
 
     def setup_connection(self, onReceivedCommand=None):
         print("SignalRCommands: setup_connection")
