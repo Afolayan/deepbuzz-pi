@@ -42,8 +42,8 @@ def index():
     session['ip_address'] = json_response["data"]["ipAddress"]
 
     # start signalr connection script
-    # os.system("python3 signalr_commands.py")
-    commandsHub.setup_connection(onReceivedCommand)
+    os.system("python3 signalr_commands.py")
+    # commandsHub.setup_connection(onReceivedCommand)
 
     templateData = {
         'title': 'HELLO!',
