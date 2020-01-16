@@ -8,6 +8,7 @@ import os
 
 
 def upload(filename, isImage=True):
+    print("upload")
     file_path = os.getcwd() + "/%s" % filename
     datum = {'FileName': filename, 'DateCreated': get_current_time(), 'IpAddress': session["ip_address"]}
 
