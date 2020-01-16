@@ -42,7 +42,7 @@ def index():
     session['ip_address'] = json_response["data"]["ipAddress"]
 
     # start signalr connection script
-    os.system("python3 signalr_commands.py")
+    # os.system("python3 signalr_commands.py")
     # commandsHub.setup_connection(onReceivedCommand)
 
     templateData = {
@@ -146,4 +146,5 @@ def stop_location():
 if __name__ == '__main__':
     # app.secret_key = "somecrazysecretkeyishere"
     app.config['SESSION_TYPE'] = 'filesystem'
+    commandsHub.start()
     app.run(host='0.0.0.0', debug=True, threaded=True, port=80)

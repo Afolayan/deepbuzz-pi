@@ -1,6 +1,6 @@
 import logging
 import sys
-
+import threading
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 
 
@@ -19,12 +19,13 @@ def input_with_default(input_text, default_value):
     return default_value if value is None or value.strip() == "" else value
 
 
-class SignalRCommands(object):
+class SignalRCommands(threading.Thread):
     server_url = "wss://deepbuzz-project.azurewebsites.net/commandHub"
 
     username = "jeff"
 
     def __init__(self):
+        super().__init__()
         print(" SignalRCommands: __init__")
         self.hub_connection = HubConnectionBuilder() \
             .with_url(self.server_url) \
@@ -35,6 +36,7 @@ class SignalRCommands(object):
             "reconnect_interval": 5,
             "max_attempts": 5
         }).build()
+        self.setup_connection(onReceivedMessage)
 
     def setup_connection(self, onReceivedCommand=None):
         print("SignalRCommands: setup_connection")
