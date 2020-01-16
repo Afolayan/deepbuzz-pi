@@ -76,6 +76,7 @@ class CameraOptions(object):
         pass
 
     def single_image_capture(self):
+        print("single_image_capture")
         self.init_camera()
         self.camera.start_preview()
         sleep(2)
@@ -87,6 +88,7 @@ class CameraOptions(object):
         sleep(float(get_image_capture_time()))  # wait some seconds
 
     def multiple_image_capture(self):
+        print("multiple_image_capture")
         self.init_camera()
         self.camera.start_preview()
         sleep(2)
@@ -106,6 +108,7 @@ class CameraOptions(object):
             return "Cannot complete this process."
 
     def single_video_capture(self):
+        print("single_video_capture")
         self.init_camera()
         filename = 'my_video.h264'
         print(" started now at {}".format(self.timestamp))
@@ -118,6 +121,7 @@ class CameraOptions(object):
         upload(filename, False)
 
     def multiple_video_capture(self, count):
+        print("multiple_video_capture")
         if count == 1:
             print("\n\ni is single_video_capture")
             self.single_video_capture()
