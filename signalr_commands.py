@@ -97,7 +97,6 @@ cameraOptions = CameraOptions()
 
 commandsHub = SignalRCommands(1, "Thread-1", 1)
 commandsHub.start()
-commandsHub.run()
 
 # server_url = "wss://deepbuzz-project.azurewebsites.net/commandHub"
 #
