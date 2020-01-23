@@ -8,7 +8,6 @@ from requests import Session
 
 from utils import get_device_registration_url, get_device_name
 from RaspPiCamera import CameraOptions, get_current_time
-from signalr_commands import SignalRCommands
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'memcached'
@@ -17,8 +16,6 @@ sess = Session()
 
 cameraOptions = CameraOptions()
 device_session = Session()
-
-# commandsHub = SignalRCommands()
 
 
 # vc = cv2.VideoCapture(0)
@@ -41,10 +38,6 @@ def index():
 
     session['ip_address'] = json_response["data"]["ipAddress"]
 
-    # start signalr connection script
-    # os.system("python3 signalr_commands.py")
-    # commandsHub.setup_connection(onReceivedCommand)
-
     templateData = {
         'title': 'HELLO!',
         'time': timeString,
@@ -54,22 +47,6 @@ def index():
 
     print(session)
     return render_template('index.html', **templateData)
-
-
-def onReceivedCommand(message):
-    print("item: ", message[0])
-    print("command: ", message[1])
-
-    if message[0] == 'camera':
-        if message[1] == 'start':
-            start_camera()
-        else:
-            stop_camera()
-    elif message[1] == 'video':
-        if message[1] == 'start':
-            start_video()
-        else:
-            stop_video()
 
 
 def gen():
@@ -146,5 +123,4 @@ def stop_location():
 if __name__ == '__main__':
     # app.secret_key = "somecrazysecretkeyishere"
     app.config['SESSION_TYPE'] = 'filesystem'
-    #commandsHub.start()
     app.run(host='0.0.0.0', debug=True, threaded=True, port=80)
