@@ -3,6 +3,8 @@ import sys
 import threading
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 
+from RaspPiCamera import CameraOptions
+
 
 def onReceivedMessage(message):
     print("item: ", message[0])
@@ -57,6 +59,53 @@ class SignalRCommands(threading.Thread):
         self.hub_connection.stop()
 
         sys.exit(0)
+
+
+cameraOptions = CameraOptions()
+
+
+def start_camera():
+    print("starting camera")
+    cameraOptions.multiple_image_capture()
+
+
+def stop_camera():
+    print("stopping camera")
+    cameraOptions.stop_capture()
+
+
+def start_video():
+    print("starting video")
+    count = 5
+
+    print("count: " + str(count))
+    cameraOptions.multiple_video_capture(count)
+    pass
+
+
+def stop_video():
+    print("stopping video")
+    cameraOptions.stop_capture()
+
+
+def onReceivedCommand(message):
+    print("item: ", message[0])
+    print("command: ", message[1])
+
+    if message[0] == 'camera':
+        if message[1] == 'start':
+            start_camera()
+        else:
+            stop_camera()
+    elif message[1] == 'video':
+        if message[1] == 'start':
+            start_video()
+        else:
+            stop_video()
+
+
+commandsHub = SignalRCommands()
+commandsHub.setup_connection(onReceivedCommand)
 
 # server_url = "wss://deepbuzz-project.azurewebsites.net/commandHub"
 #
