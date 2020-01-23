@@ -76,42 +76,24 @@ class SignalRCommands(threading.Thread):
 
         if message[0] == 'camera':
             if message[1] == 'start':
-                start_camera()
+                print("starting camera")
+                cameraOptions.multiple_image_capture()
             else:
-                stop_camera()
+                print("stopping camera")
+                cameraOptions.stop_capture()
         elif message[1] == 'video':
             if message[1] == 'start':
-                start_video()
+                print("starting video")
+                count = 5
+
+                print("count: " + str(count))
+                cameraOptions.multiple_video_capture(count)
             else:
-                stop_video()
+                print("stopping video")
+                cameraOptions.stop_capture()
 
 
 cameraOptions = CameraOptions()
-
-
-def start_camera():
-    print("starting camera")
-    cameraOptions.multiple_image_capture()
-
-
-def stop_camera():
-    print("stopping camera")
-    cameraOptions.stop_capture()
-
-
-def start_video():
-    print("starting video")
-    count = 5
-
-    print("count: " + str(count))
-    cameraOptions.multiple_video_capture(count)
-    pass
-
-
-def stop_video():
-    print("stopping video")
-    cameraOptions.stop_capture()
-
 
 commandsHub = SignalRCommands(1, "Thread-1", 1)
 commandsHub.start()
