@@ -18,7 +18,7 @@ sess = Session()
 cameraOptions = CameraOptions()
 device_session = Session()
 
-commandsHub = SignalRCommands()
+# commandsHub = SignalRCommands()
 
 
 # vc = cv2.VideoCapture(0)
@@ -146,5 +146,5 @@ def stop_location():
 if __name__ == '__main__':
     # app.secret_key = "somecrazysecretkeyishere"
     app.config['SESSION_TYPE'] = 'filesystem'
-    commandsHub.start()
+    #commandsHub.start()
     app.run(host='0.0.0.0', debug=True, threaded=True, port=80)
