@@ -43,7 +43,7 @@ def index():
 
     # start signalr connection script
     # os.system("python3 signalr_commands.py")
-    commandsHub.setup_connection(onReceivedCommand)
+    # commandsHub.setup_connection(onReceivedCommand)
 
     templateData = {
         'title': 'HELLO!',
