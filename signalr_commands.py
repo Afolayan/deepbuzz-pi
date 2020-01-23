@@ -26,20 +26,29 @@ class SignalRCommands(threading.Thread):
 
     username = "jeff"
 
-    def __init__(self):
+    def __init__(self, threadID, name, counter):
         super().__init__()
         print(" SignalRCommands: __init__")
         self.hub_connection = HubConnectionBuilder() \
             .with_url(self.server_url) \
             .configure_logging(logging.DEBUG) \
             .with_automatic_reconnect({
-            "type": "raw",
-            "keep_alive_interval": 10,
-            "reconnect_interval": 5,
-            "max_attempts": 5
-        }).build()
+                    "type": "raw",
+                    "keep_alive_interval": 10,
+                    "reconnect_interval": 5,
+                    "max_attempts": 5
+                })\
+            .build()
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+        self.counter = counter
 
-    def setup_connection(self, onReceivedCommand=None):
+    def run(self):
+        print("Starting " + self.name)
+        self.setup_connection(onReceivedMessage)
+
+    def setup_connection(self, onReceivedCommand):
         print("SignalRCommands: setup_connection")
 
         self.hub_connection.on_open(lambda: print("connection opened and handshake received ready to send messages"))
@@ -59,6 +68,22 @@ class SignalRCommands(threading.Thread):
         self.hub_connection.stop()
 
         sys.exit(0)
+
+    @staticmethod
+    def onReceivedCommand(message):
+        print("item: ", message[0])
+        print("command: ", message[1])
+
+        if message[0] == 'camera':
+            if message[1] == 'start':
+                start_camera()
+            else:
+                stop_camera()
+        elif message[1] == 'video':
+            if message[1] == 'start':
+                start_video()
+            else:
+                stop_video()
 
 
 cameraOptions = CameraOptions()
@@ -88,24 +113,8 @@ def stop_video():
     cameraOptions.stop_capture()
 
 
-def onReceivedCommand(message):
-    print("item: ", message[0])
-    print("command: ", message[1])
-
-    if message[0] == 'camera':
-        if message[1] == 'start':
-            start_camera()
-        else:
-            stop_camera()
-    elif message[1] == 'video':
-        if message[1] == 'start':
-            start_video()
-        else:
-            stop_video()
-
-
-commandsHub = SignalRCommands()
-commandsHub.setup_connection(onReceivedCommand)
+commandsHub = SignalRCommands(1, "Thread-1", 1)
+commandsHub.start()
 
 # server_url = "wss://deepbuzz-project.azurewebsites.net/commandHub"
 #
