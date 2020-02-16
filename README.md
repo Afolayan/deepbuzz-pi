@@ -25,3 +25,6 @@ Run this to activate virtual environment
 #To run flask on local IP
 - enter venv with `source venv/bin/activate`
 - flask run --host 0.0.0.0
+
+#check this to get location
+https://stackoverflow.com/questions/17704436/getting-map-location-python
