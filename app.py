@@ -24,8 +24,8 @@ device_session = Session()
 @app.route('/')
 def index():
     """Video streaming"""
-    now = datetime.now()
-    timeString = now.strftime("%Y-%m-%d %H:%M")
+    # now = datetime.now()
+    # timeString = now.strftime("%Y-%m-%d %H:%M")
 
     register_url = get_device_registration_url()
     with requests.Session() as s:
@@ -40,7 +40,8 @@ def index():
 
     templateData = {
         'title': 'HELLO!',
-        'time': timeString,
+        # 'time': timeString,
+        'time': "2020-03-06",
         'response': json_response,
         'ipaddress': json_response["data"]["ipAddress"]
     }
