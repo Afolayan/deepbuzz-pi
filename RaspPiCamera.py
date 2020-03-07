@@ -136,6 +136,7 @@ class CameraOptions(object):
         # connection = client_socket.makefile('wb')
         try:
             # Start a preview and let the camera warm up for 2 seconds
+            self.init_camera()
             self.camera.start_preview()
             time.sleep(2)
 
