@@ -156,7 +156,7 @@ class CameraOptions(object):
                 res = requests.post(url=post_image_stream_url,
                                     data=stream.read(),
                                     headers={'Content-Type': 'application/octet-stream'})
-                print("res us "+res)
+                print("res us ", res)
                 # connection.write(stream.read())
                 # If we've been capturing for more than 30 seconds, quit
                 if time.time() - start > 30:
