@@ -71,7 +71,7 @@ class CameraOptions(object):
     isVideo = False
     camera = None
     # capture_time = get_image_capture_time()
-    capture_time = 10
+    capture_time = 1
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
     def __init__(self):
@@ -129,8 +129,9 @@ class CameraOptions(object):
         # Connect a client socket to my_server:8000 (change my_server to the
         # hostname of your server)
         client_socket = socket.socket()
+        post_image_stream_url = 'https://deepbuzz-project.azurewebsites.net/ImageUpload/PostImageStream'
         client_socket.connect((
-            'https://deepbuzz-project.azurewebsites.net/ImageUpload/PostImageStream', 8000))
+            post_image_stream_url, 8000))
 
         # Make a file-like object out of the connection
         connection = client_socket.makefile('wb')
@@ -152,6 +153,10 @@ class CameraOptions(object):
                 connection.flush()
                 # Rewind the stream and send the image data over the wire
                 stream.seek(0)
+                res = requests.post(url=post_image_stream_url,
+                                    data=stream.read(),
+                                    headers={'Content-Type': 'application/octet-stream'})
+                print("res us "+res)
                 connection.write(stream.read())
                 # If we've been capturing for more than 30 seconds, quit
                 if time.time() - start > 30:
