@@ -146,18 +146,18 @@ class CameraOptions(object):
             # our protocol simple)
             start = time.time()
             stream = io.BytesIO()
-            for foo in self.camera.capture_continuous(stream, 'jpeg'):
+            for foo in self.camera.capture_continuous(stream, 'png'):
                 # Write the length of the capture to the stream and flush to
                 # ensure it actually gets sent
                 # connection.write(struct.pack('<L', stream.tell()))
                 # connection.flush()
                 # Rewind the stream and send the image data over the wire
                 stream.seek(0)
-                datum = {'byteArray': stream.read()}
+                # datum = {'byteArray': stream.read()}
+                datum = {'byteArray': foo}
                 res = requests.post(url=post_image_stream_url,
                                     data=datum,
                                     headers={'Content-Type': 'application/octet-stream'})
-                print("res us ", res.raw)
                 print("res us ", res)
                 # connection.write(stream.read())
                 # If we've been capturing for more than 30 seconds, quit
