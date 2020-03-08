@@ -168,7 +168,7 @@ class CameraOptions(object):
                 print(stream.read())
 
                 res = requests.post(url=post_image_stream_url,
-                                    json=json.dumps(datum),
+                                    json=datum,
                                     headers={'Content-Type': 'application/octet-stream'}
                                     )
                 print("res us ", res)
