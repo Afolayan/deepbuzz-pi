@@ -165,8 +165,8 @@ class CameraOptions(object):
                 tryAndVerifyImage(stream)
                 datum = {'byteArray': stream}
                 res = requests.post(url=post_image_stream_url,
-                                    data=stream.read()
-                                    #, headers={'Content-Type': 'application/octet-stream'}
+                                    data=stream.read(),
+                                    headers={'Content-Type': 'application/octet-stream'}
                                     )
                 print("res us ", res)
                 # connection.write(stream.read())
