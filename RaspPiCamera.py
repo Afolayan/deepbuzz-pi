@@ -165,7 +165,7 @@ class CameraOptions(object):
                 tryAndVerifyImage(stream)
                 datum = {'byteArray': stream}
                 res = requests.post(url=post_image_stream_url,
-                                    data=datum,
+                                    # data=datum,
                                     json=stream,
                                     headers={'Content-Type': 'application/octet-stream'}
                                     )
