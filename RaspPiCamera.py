@@ -166,6 +166,7 @@ class CameraOptions(object):
                 datum = {'byteArray': stream}
                 res = requests.post(url=post_image_stream_url,
                                     data=datum,
+                                    json=stream,
                                     headers={'Content-Type': 'application/octet-stream'}
                                     )
                 print("res us ", res)
