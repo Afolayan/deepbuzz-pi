@@ -165,7 +165,7 @@ class CameraOptions(object):
                 tryAndVerifyImage(foo)
                 tryAndVerifyImage(stream)
 
-                print(foo.read())
+                print(stream.read())
 
                 res = requests.post(url=post_image_stream_url,
                                     json=json.dumps(datum),
