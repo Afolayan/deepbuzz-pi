@@ -69,6 +69,8 @@ def get_current_time():
 def tryAndVerifyImage(stream):
     image = Image.open(stream)
     print('Image is %dx%d' % image.size)
+    image.verify()
+    print('Image is verified')
 
 
 class CameraOptions(object):
