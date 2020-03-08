@@ -165,12 +165,12 @@ class CameraOptions(object):
                 tryAndVerifyImage(foo)
                 tryAndVerifyImage(stream)
 
-                files = {'files': ('byteArray', open(stream.read(), mode='rb'), 'application/octet-stream')}
+                # files = io.BytesIO(stream.read())
 
                 res = requests.post(url=post_image_stream_url,
                                     # data=datum,
                                     json=json.dumps(datum),
-                                    files=files,
+                                    # files=files,
                                     headers={'Content-Type': 'application/octet-stream'}
                                     )
                 print("res us ", res)
