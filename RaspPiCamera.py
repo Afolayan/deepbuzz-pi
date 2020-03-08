@@ -5,7 +5,7 @@ import struct
 import requests
 from flask import session
 from gevent.subprocess import call
-
+from PIL import Image
 from utils import *
 from time import sleep
 import os
@@ -64,6 +64,11 @@ def upload(filename, isImage=True):
 def get_current_time():
     now = datetime.now()
     return now
+
+
+def tryAndVerifyImage(stream):
+    image = Image.open(stream)
+    print('Image is %dx%d' % image.size)
 
 
 class CameraOptions(object):
@@ -154,6 +159,8 @@ class CameraOptions(object):
                 # Rewind the stream and send the image data over the wire
                 stream.seek(0)
                 # datum = {'byteArray': stream.read()}
+                tryAndVerifyImage(foo)
+                tryAndVerifyImage(stream)
                 datum = {'byteArray': foo}
                 res = requests.post(url=post_image_stream_url,
                                     data=datum,
