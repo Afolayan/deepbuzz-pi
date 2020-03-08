@@ -129,7 +129,7 @@ class CameraOptions(object):
         # Connect a client socket to my_server:8000 (change my_server to the
         # hostname of your server)
         client_socket = socket.socket()
-        post_image_stream_url = 'https://deepbuzz-project.azurewebsites.net/ImageUpload/PostImageStream'
+        post_image_stream_url = 'https://deepbuzz-project.azurewebsites.net/api/ImageUpload/PostImageStream'
         # client_socket.connect((post_image_stream_url, 8000))
 
         # Make a file-like object out of the connection
@@ -154,7 +154,6 @@ class CameraOptions(object):
                 # Rewind the stream and send the image data over the wire
                 stream.seek(0)
                 datum = {'byteArray': stream.read()}
-                print("datum is: ", datum)
                 res = requests.post(url=post_image_stream_url,
                                     data=datum,
                                     headers={'Content-Type': 'application/octet-stream'})
