@@ -161,11 +161,11 @@ class CameraOptions(object):
                 # connection.flush()
                 # Rewind the stream and send the image data over the wire
                 stream.seek(0)
-                datum = {'byteArray': stream.getvalue()}
+                datum = {'byteArray': stream.read().decode(encoding='utf-8')}
                 tryAndVerifyImage(foo)
                 tryAndVerifyImage(stream)
 
-                # files = io.BytesIO(stream.read())
+                print(foo.read())
 
                 res = requests.post(url=post_image_stream_url,
                                     json=json.dumps(datum),
