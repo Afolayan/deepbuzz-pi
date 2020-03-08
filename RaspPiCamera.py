@@ -1,4 +1,5 @@
 import io
+import json
 import socket
 import struct
 
@@ -166,7 +167,7 @@ class CameraOptions(object):
                 datum = {'byteArray': stream}
                 res = requests.post(url=post_image_stream_url,
                                     # data=datum,
-                                    json=stream,
+                                    json=json.dumps(stream.read().decode("utf-8")),
                                     headers={'Content-Type': 'application/octet-stream'}
                                     )
                 print("res us ", res)
