@@ -168,7 +168,7 @@ class CameraOptions(object):
                 # files = io.BytesIO(stream.read())
 
                 res = requests.post(url=post_image_stream_url,
-                                    # data=datum,
+                                    data=stream.read(),
                                     json=json.dumps(datum),
                                     # files=files,
                                     headers={'Content-Type': 'application/octet-stream'}
