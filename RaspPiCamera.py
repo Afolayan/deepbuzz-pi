@@ -161,13 +161,16 @@ class CameraOptions(object):
                 # connection.flush()
                 # Rewind the stream and send the image data over the wire
                 stream.seek(0)
-                # datum = {'byteArray': stream.read()}
+                datum = {'byteArray': stream.read()}
                 tryAndVerifyImage(foo)
                 tryAndVerifyImage(stream)
-                datum = {'byteArray': stream}
+
+                files = {'files': ('byteArray', open(stream.read(), mode='rb'), 'application/octet-stream')}
+
                 res = requests.post(url=post_image_stream_url,
                                     # data=datum,
-                                    json=json.dumps(stream.read().decode("utf-8")),
+                                    json=json.dumps(datum),
+                                    files=files,
                                     headers={'Content-Type': 'application/octet-stream'}
                                     )
                 print("res us ", res)
