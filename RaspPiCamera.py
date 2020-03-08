@@ -106,7 +106,8 @@ class CameraOptions(object):
         self.camera.start_preview()
         sleep(2)
         try:
-            for filename in self.camera.capture_continuous('img-{timestamp:%Y-%m-%d-%H-%M-%S}.jpg'):
+            # for filename in self.camera.capture_continuous('img-{timestamp:%Y-%m-%d-%H-%M-%S}.jpg'):
+            for filename in self.camera.capture_continuous('img-65.jpg'):
                 print('Captured %s' % filename)
 
                 upload_status = upload(filename)
