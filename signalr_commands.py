@@ -3,11 +3,12 @@ import logging
 import sys
 import threading
 from signalrcore.hub_connection_builder import HubConnectionBuilder
-
+import requests as req
 from RaspPiCamera import CameraOptions
 
 
 # Message received{"type":1,"target":"SendCommand","arguments":[{"item":"camera","command":"start"}]}
+flask_url = "http://127.0.0.1:5000/"
 
 
 def onReceivedMessage(message):
@@ -19,20 +20,25 @@ def onReceivedMessage(message):
     if commandItem == 'camera':
         if command == 'start':
             print("starting camera")
-            cameraOptions.multiple_image_capture()
+            camera_start_url = flask_url + "camera/start"
+            response = req.post(camera_start_url)
         else:
             print("stopping camera")
-            cameraOptions.stop_capture()
+            camera_stop_url = flask_url + "camera/stop"
+            response = req.post(camera_stop_url)
     elif commandItem == 'video':
         if command == 'start':
             print("starting video")
             count = 5
 
-            print("count: " + str(count))
-            cameraOptions.multiple_video_capture(count)
+            video_start_url = flask_url + "video/start"
+            response = req.post(video_start_url)
         else:
             print("stopping video")
-            cameraOptions.stop_capture()
+            video_stop_url = flask_url + "video/stop"
+            response = req.post(video_stop_url)
+
+    print(response)
 
 
 def on_error(error):
