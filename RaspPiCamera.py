@@ -162,7 +162,8 @@ class CameraOptions(object):
     def stop_capture(self):
         try:
             self.camera.stop_preview()
-            # self.camera.close()
+            self.camera.close()
+
             return "Camera closed successfully."
         except Exception as exception:
             return "Cannot close camera: {0}".format(exception)

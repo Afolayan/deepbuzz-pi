@@ -19,22 +19,18 @@ def onReceivedMessage(message):
 
     if commandItem == 'camera':
         if command == 'start':
-            print("starting camera")
             camera_start_url = flask_url + "camera/start"
             response = req.post(camera_start_url)
         else:
-            print("stopping camera")
             camera_stop_url = flask_url + "camera/stop"
             response = req.post(camera_stop_url)
     elif commandItem == 'video':
         if command == 'start':
-            print("starting video")
             count = 5
 
             video_start_url = flask_url + "video/start"
             response = req.post(video_start_url)
         else:
-            print("stopping video")
             video_stop_url = flask_url + "video/stop"
             response = req.post(video_stop_url)
 
