@@ -208,7 +208,7 @@ class SignalRCommands(threading.Thread):
 
 cameraOptions = CameraOptions()
 
-SERVER_ADDRESS = (HOST, PORT) = '', 8888
+SERVER_ADDRESS = (HOST, PORT) = '', 3500
 REQUEST_QUEUE_SIZE = 5
 
 
