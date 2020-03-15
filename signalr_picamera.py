@@ -191,7 +191,6 @@ class SignalRCommands(threading.Thread):
         self.hub_connection.on_open(lambda: print("connection opened and handshake received ready to send messages"))
         self.hub_connection.on_close(lambda: print("connection closed"))
 
-        self.hub_connection.on("SendCommand", onReceivedMessage)
         self.hub_connection.on("SendCommand", onReceivedCommand)
         self.hub_connection.start()
         message = None
