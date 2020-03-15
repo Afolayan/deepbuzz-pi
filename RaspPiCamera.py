@@ -111,7 +111,6 @@ class CameraOptions(object):
 
                 upload_status = upload(filename)
                 print("upload status code: {0}".format(upload_status))
-                yield upload_status
 
                 if upload_status != 200:
                     self.stop_capture()
