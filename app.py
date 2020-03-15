@@ -72,7 +72,7 @@ def start_camera():
     print("starting camera")
     # cameraOptions.single_video_capture()
     cameraOptions.multiple_image_capture()
-    return json.dumps({'success': True, "function": "start"}), 200, {'ContentType': 'application/json'}
+    yield json.dumps({'success': True, "function": "start"}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/camera/stop', methods=['POST'])
