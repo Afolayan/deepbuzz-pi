@@ -236,6 +236,6 @@ def serve_forever():
 
 
 if __name__ == '__main__':
-    serve_forever()
     commandsHub = SignalRCommands(1, "Thread-1", 1)
     commandsHub.start()
+    serve_forever()
