@@ -3,7 +3,7 @@
     """
 import requests
 import socket
-import serial  # import serial pacakge
+import serial  # import serial package
 from time import sleep
 import webbrowser  # import package for opening link in browser
 import sys  # import system package

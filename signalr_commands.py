@@ -1,3 +1,4 @@
+import json
 import logging
 import sys
 import threading
@@ -6,9 +7,32 @@ from signalrcore.hub_connection_builder import HubConnectionBuilder
 from RaspPiCamera import CameraOptions
 
 
+# Message received{"type":1,"target":"SendCommand","arguments":[{"item":"camera","command":"start"}]}
+
+
 def onReceivedMessage(message):
-    print("item: ", message[0])
-    print("command: ", message[1])
+    commandObject = message[0]
+    print("commandObject: ", commandObject)
+    commandItem = commandObject["item"]
+    command = commandObject["command"]
+
+    if commandItem == 'camera':
+        if command == 'start':
+            print("starting camera")
+            cameraOptions.multiple_image_capture()
+        else:
+            print("stopping camera")
+            cameraOptions.stop_capture()
+    elif commandItem == 'video':
+        if command == 'start':
+            print("starting video")
+            count = 5
+
+            print("count: " + str(count))
+            cameraOptions.multiple_video_capture(count)
+        else:
+            print("stopping video")
+            cameraOptions.stop_capture()
 
 
 def on_error(error):
@@ -33,11 +57,11 @@ class SignalRCommands(threading.Thread):
             .with_url(self.server_url) \
             .configure_logging(logging.DEBUG) \
             .with_automatic_reconnect({
-                    "type": "raw",
-                    "keep_alive_interval": 10,
-                    "reconnect_interval": 5,
-                    "max_attempts": 5
-                })\
+            "type": "raw",
+            "keep_alive_interval": 10,
+            "reconnect_interval": 5,
+            "max_attempts": 5
+        }) \
             .build()
         threading.Thread.__init__(self)
         self.threadID = threadID
@@ -68,29 +92,6 @@ class SignalRCommands(threading.Thread):
         self.hub_connection.stop()
 
         sys.exit(0)
-
-    @staticmethod
-    def onReceivedCommand(message):
-        print("item: ", message[0])
-        print("command: ", message[1])
-
-        if message[0] == 'camera':
-            if message[1] == 'start':
-                print("starting camera")
-                cameraOptions.multiple_image_capture()
-            else:
-                print("stopping camera")
-                cameraOptions.stop_capture()
-        elif message[1] == 'video':
-            if message[1] == 'start':
-                print("starting video")
-                count = 5
-
-                print("count: " + str(count))
-                cameraOptions.multiple_video_capture(count)
-            else:
-                print("stopping video")
-                cameraOptions.stop_capture()
 
 
 cameraOptions = CameraOptions()
