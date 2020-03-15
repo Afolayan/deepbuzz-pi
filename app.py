@@ -38,9 +38,6 @@ def index():
 
     session['ip_address'] = json_response["data"]["ipAddress"]
 
-    from signalr_commands import commandsHub
-    commandsHub.start()
-
     templateData = {
         'title': 'HELLO!',
         # 'time': timeString,
