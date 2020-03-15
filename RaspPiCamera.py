@@ -1,7 +1,12 @@
+import io
+import json
+import socket
+import struct
+
 import requests
 from flask import session
 from gevent.subprocess import call
-
+from PIL import Image
 from utils import *
 from time import sleep
 import os
@@ -62,12 +67,19 @@ def get_current_time():
     return now
 
 
+def tryAndVerifyImage(stream):
+    image = Image.open(stream)
+    print('Image is %dx%d' % image.size)
+    image.verify()
+    print('Image is verified')
+
+
 class CameraOptions(object):
     isImage = False
     isVideo = False
     camera = None
     # capture_time = get_image_capture_time()
-    capture_time = 10
+    capture_time = 0.3
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
     def __init__(self):
@@ -94,7 +106,8 @@ class CameraOptions(object):
         self.camera.start_preview()
         sleep(2)
         try:
-            for filename in self.camera.capture_continuous('img-{timestamp:%Y-%m-%d-%H-%M-%S}.jpg'):
+            # for filename in self.camera.capture_continuous('img-{timestamp:%Y-%m-%d-%H-%M-%S}.jpg'):
+            for filename in self.camera.capture_continuous('img-65.jpg'):
                 print('Captured %s' % filename)
 
                 upload_status = upload(filename)
