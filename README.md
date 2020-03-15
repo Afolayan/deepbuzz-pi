@@ -28,3 +28,7 @@ Run this to activate virtual environment
 
 #check this to get location
 https://stackoverflow.com/questions/17704436/getting-map-location-python
+
+# to clear out python process
+ps -fA | grep python
+sudo kill -9 pid

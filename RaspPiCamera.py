@@ -5,7 +5,6 @@ import struct
 
 import requests
 from flask import session
-from gevent.subprocess import call
 from PIL import Image
 from utils import *
 from time import sleep
