@@ -92,14 +92,17 @@ class CameraOptions(object):
         self.init_camera()
         self.camera.start_preview()
         while True:
-            if not self._running:
-                break
             try:
                 for filename in self.camera.capture_continuous('img-65.jpg'):
                     print('Captured %s' % filename)
 
                     upload_status = upload(filename)
                     print("upload status code: {0}".format(upload_status))
+
+                    print("self._running is: ", self._running)
+
+                    if not self._running:
+                        break
 
                     if upload_status != 200:
                         self.stop_capture()
@@ -152,17 +155,12 @@ def onReceivedMessage(message):
             print("starting camera")
             cameraOptions.thread.start()
         else:
-            if cameraOptions:
-                print("cameraOptions object is active")
-            else:
-                print("cameraOptions object is null")
             for thread in threading.enumerate():
                 print("running threads: ", thread.name)
-                if thread.name is "upload_image":
-                    print("running threads: upload_image captured again")
                 if thread.name == "upload_image":
                     print("running threads: upload_image captured")
                     cameraOptions.terminate()
+                    cameraOptions.thread.join()
                     thread.join()
                     if not thread.isAlive():
                         print('thread killed')
