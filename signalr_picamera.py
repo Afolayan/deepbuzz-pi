@@ -153,6 +153,12 @@ def onReceivedMessage(message):
             print("starting camera")
             cameraOptions.thread.start()
         else:
+            if cameraOptions:
+                print("cameraOptions object is active")
+            else:
+                print("cameraOptions object is null")
+            for thread in threading.enumerate():
+                print("running threads: ", thread.name)
             cameraOptions.terminate()
             cameraOptions.stop_capture()
     elif commandItem == 'video':
