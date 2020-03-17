@@ -68,7 +68,7 @@ def try_and_verify_image(stream):
     print('Image is verified')
 
 
-class CameraOptions(object):
+class CameraOptions(threading.Thread):
     isImage = False
     isVideo = False
     camera = None
@@ -76,16 +76,39 @@ class CameraOptions(object):
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
     def __init__(self, isVideo=False):
+        super().__init__()
+        self.killed = False
         if isVideo:
-            self.thread = threading.Thread(target=self.multiple_video_capture, args=(5,), name="upload_video")
+            threading.Thread(target=self.multiple_video_capture, args=(5,), name="upload_video")
         else:
-            stop_threads = False
-            self.thread = threading.Thread(
+            threading.Thread(
                 target=self.multiple_image_capture,
-                args=(lambda : stop_threads, ),
                 name="upload_image")
 
-        self.thread.daemon = True
+    def start(self):
+        self.__run_backup = self.run
+        self.run = self.__run
+        threading.Thread.start(self)
+
+    def __run(self):
+        sys.settrace(self.globaltrace)
+        self.__run_backup()
+        self.run = self.__run_backup
+
+    def globaltrace(self, frame, event, arg):
+        if event == 'call':
+            return self.localtrace
+        else:
+            return None
+
+    def localtrace(self, frame, event, arg):
+        if self.killed:
+            if event == 'line':
+                raise SystemExit()
+        return self.localtrace
+
+    def kill(self):
+        self.killed = True
 
     def multiple_image_capture(self, stop):
         print("multiple_image_capture")
@@ -153,18 +176,19 @@ def onReceivedMessage(message):
         cameraOptions = CameraOptions()
         if command == 'start':
             print("starting camera")
-            cameraOptions.thread.start()
+            cameraOptions.start()
         else:
-            for thread in threading.enumerate():
-                print("running threads: ", thread.name)
-                if thread.name == "upload_image":
-                    print("running threads: upload_image captured")
-                    cameraOptions.stop_threads = True
-                    cameraOptions.thread.join()
-                    thread.join()
-                    if not thread.isAlive():
-                        print('thread killed')
-            cameraOptions.stop_capture()
+            # for thread in threading.enumerate():
+                # print("running threads: ", thread.name)
+                # if thread.name == "upload_image":
+
+            cameraOptions.kill()
+            cameraOptions.join()
+            if not cameraOptions.isAlive():
+                print('thread killed')
+            else:
+                print('thread alive')
+
     elif commandItem == 'video':
         cameraOptions = CameraOptions(isVideo=True)
         if command == 'start':
