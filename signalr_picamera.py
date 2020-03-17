@@ -75,7 +75,7 @@ class CameraOptions(object):
     capture_time = 0.3
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
-    def __init__(self, isInit=True, isVideo=False):
+    def __init__(self, isVideo=False):
         if isVideo:
             self.thread = threading.Thread(target=self.multiple_video_capture, args=(5,), name="upload_video")
         else:
@@ -91,7 +91,9 @@ class CameraOptions(object):
         print("multiple_image_capture")
         self.init_camera()
         self.camera.start_preview()
-        while self._running:
+        while True:
+            if self._running:
+                break
             try:
                 for filename in self.camera.capture_continuous('img-65.jpg'):
                     print('Captured %s' % filename)
@@ -102,12 +104,9 @@ class CameraOptions(object):
                     if upload_status != 200:
                         self.stop_capture()
                         break
-                    # sleep(self.capture_time)  # wait some seconds
             except KeyboardInterrupt:
                 self.stop_capture()
                 sys.exit(0)
-        else:
-            self.stop_capture()
 
     def multiple_video_capture(self, count):
         print("multiple_video_capture")
@@ -159,7 +158,11 @@ def onReceivedMessage(message):
                 print("cameraOptions object is null")
             for thread in threading.enumerate():
                 print("running threads: ", thread.name)
-            cameraOptions.terminate()
+                if thread.name == "upload_image":
+                    cameraOptions.terminate()
+                    thread.join()
+                if not thread.isAlive():
+                    print('thread killed')
             cameraOptions.stop_capture()
     elif commandItem == 'video':
         cameraOptions = CameraOptions(isVideo=True)
