@@ -75,27 +75,33 @@ class CameraOptions(object):
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
     def __init__(self):
-        pass
+        self.thread = threading.Thread(target=self.multiple_image_capture, name="upload_image")
+        self.thread.daemon = True
+        self.thread.start()
+        self._running = True
+
+    def terminate(self):
+        self._running = False
 
     def multiple_image_capture(self):
         print("multiple_image_capture")
         self.init_camera()
         self.camera.start_preview()
-        sleep(2)
-        try:
-            for filename in self.camera.capture_continuous('img-65.jpg'):
-                print('Captured %s' % filename)
+        while self._running:
+            try:
+                for filename in self.camera.capture_continuous('img-65.jpg'):
+                    print('Captured %s' % filename)
 
-                upload_status = upload(filename)
-                print("upload status code: {0}".format(upload_status))
+                    upload_status = upload(filename)
+                    print("upload status code: {0}".format(upload_status))
 
-                if upload_status != 200:
-                    self.stop_capture()
-                    break
-                sleep(self.capture_time)  # wait some seconds
-        except Exception as e:
-            self.stop_capture()
-            return "Cannot complete this process."
+                    if upload_status != 200:
+                        self.stop_capture()
+                        break
+                    sleep(self.capture_time)  # wait some seconds
+            except KeyboardInterrupt:
+                self.stop_capture()
+                sys.exit(0)
 
     def multiple_video_capture(self, count):
         print("multiple_video_capture")
@@ -117,6 +123,7 @@ class CameraOptions(object):
         try:
             self.camera.stop_preview()
             self.camera.close()
+            self.thread.join()
             return "Camera closed successfully."
         except Exception as exception:
             return "Cannot close camera: {0}".format(exception)
@@ -135,23 +142,22 @@ def onReceivedMessage(message):
     command = commandObject["command"]
 
     if commandItem == 'camera':
+        cameraOptions = CameraOptions()
         if command == 'start':
-            cameraOptions.multiple_image_capture()
-            # camera_start_url = flask_url + "camera/start"
-            # response = req.post(camera_start_url)
+            print("starting camera")
+            # cameraOptions.serve_forever()
+            # cameraOptions.multiple_image_capture()
+
         else:
+            cameraOptions.terminate()
             cameraOptions.stop_capture()
-            # camera_stop_url = flask_url + "camera/stop"
-            # response = req.post(camera_stop_url)
     elif commandItem == 'video':
+        cameraOptions = CameraOptions()
         if command == 'start':
             cameraOptions.multiple_video_capture(5)
-            # video_start_url = flask_url + "video/start"
-            # response = req.post(video_start_url)
         else:
+            cameraOptions.terminate()
             cameraOptions.stop_capture()
-            # video_stop_url = flask_url + "video/stop"
-            # response = req.post(video_stop_url)
     print("done command: " + commandItem)
 
 
@@ -205,36 +211,10 @@ class SignalRCommands(threading.Thread):
         sys.exit(0)
 
 
-cameraOptions = CameraOptions()
-
 SERVER_ADDRESS = (HOST, PORT) = '', 3500
 REQUEST_QUEUE_SIZE = 5
-
-
-def handle_request(client_connection):
-    request = client_connection.recv(1024)
-    print(request.decode())
-    http_response = b"""\
-        HTTP/1.1 200 OK
-        Hello, World!
-        """
-    client_connection.sendall(http_response)
-
-
-def serve_forever():
-    listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    listen_socket.bind(SERVER_ADDRESS)
-    listen_socket.listen(REQUEST_QUEUE_SIZE)
-    print('Serving HTTP on port {port} ...'.format(port=PORT))
-
-    while True:
-        client_connection, client_address = listen_socket.accept()
-        handle_request(client_connection)
-        client_connection.close()
 
 
 if __name__ == '__main__':
     commandsHub = SignalRCommands(1, "Thread-1", 1)
     commandsHub.start()
-    serve_forever()
