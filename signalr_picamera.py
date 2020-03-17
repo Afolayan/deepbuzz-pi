@@ -19,7 +19,8 @@ flask_url = "http://127.0.0.1:5000/"
 def upload(filename, isImage=True):
     print("upload")
     file_path = os.getcwd() + "/%s" % filename
-    datum = {'FileName': filename, 'DateCreated': get_current_time(), 'IpAddress': session["ip_address"]}
+    # datum = {'FileName': filename, 'DateCreated': get_current_time(), 'IpAddress': session["ip_address"]}
+    datum = {'FileName': filename, 'DateCreated': get_current_time(), 'IpAddress': "192.156.76.8"}
 
     if isImage:
         with open(file_path, "rb") as dataFile:
