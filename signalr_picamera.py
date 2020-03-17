@@ -83,8 +83,6 @@ class CameraOptions(object):
 
         self.thread.daemon = True
         self._running = True
-        if isInit:
-            self.thread.start()
 
     def terminate(self):
         self._running = False
@@ -104,7 +102,7 @@ class CameraOptions(object):
                     if upload_status != 200:
                         self.stop_capture()
                         break
-                    sleep(self.capture_time)  # wait some seconds
+                    # sleep(self.capture_time)  # wait some seconds
             except KeyboardInterrupt:
                 self.stop_capture()
                 sys.exit(0)
@@ -150,19 +148,19 @@ def onReceivedMessage(message):
     command = commandObject["command"]
 
     if commandItem == 'camera':
+        cameraOptions = CameraOptions()
         if command == 'start':
-            cameraOptions = CameraOptions(isInit=True)
             print("starting camera")
-
+            cameraOptions.thread.start()
         else:
-            cameraOptions = CameraOptions(isInit=False)
             cameraOptions.terminate()
             cameraOptions.stop_capture()
     elif commandItem == 'video':
+        cameraOptions = CameraOptions(isVideo=True)
         if command == 'start':
-            cameraOptions = CameraOptions(isInit=True, isVideo=True)
+            print("starting video")
+            cameraOptions.thread.start()
         else:
-            cameraOptions = CameraOptions(isInit=False)
             cameraOptions.terminate()
             cameraOptions.stop_capture()
     print("done command: " + commandItem)
