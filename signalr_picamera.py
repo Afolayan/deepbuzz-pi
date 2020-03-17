@@ -92,7 +92,7 @@ class CameraOptions(object):
         self.init_camera()
         self.camera.start_preview()
         while True:
-            if self._running:
+            if not self._running:
                 break
             try:
                 for filename in self.camera.capture_continuous('img-65.jpg'):
