@@ -79,15 +79,15 @@ class CameraOptions(object):
         if isVideo:
             self.thread = threading.Thread(target=self.multiple_video_capture, args=(5,), name="upload_video")
         else:
-            self.thread = threading.Thread(target=self.multiple_image_capture, name="upload_image")
+            stop_threads = False
+            self.thread = threading.Thread(
+                target=self.multiple_image_capture,
+                args=(lambda : stop_threads, ),
+                name="upload_image")
 
         self.thread.daemon = True
-        self.stop = False
 
-    def terminate(self):
-        self.stop = True
-
-    def multiple_image_capture(self):
+    def multiple_image_capture(self, stop):
         print("multiple_image_capture")
         self.init_camera()
         self.camera.start_preview()
@@ -99,9 +99,9 @@ class CameraOptions(object):
                     upload_status = upload(filename)
                     print("upload status code: {0}".format(upload_status))
 
-                    print("self._running is: ", self.stop)
+                    print("self._running is: ", stop())
 
-                    if self.stop:
+                    if stop():
                         break
 
                     if upload_status != 200:
@@ -159,8 +159,7 @@ def onReceivedMessage(message):
                 print("running threads: ", thread.name)
                 if thread.name == "upload_image":
                     print("running threads: upload_image captured")
-                    cameraOptions.stop = True
-                    cameraOptions.terminate()
+                    cameraOptions.stop_threads = True
                     cameraOptions.thread.join()
                     thread.join()
                     if not thread.isAlive():
