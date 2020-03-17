@@ -80,11 +80,11 @@ class CameraOptions(object):
             self.thread = threading.Thread(target=self.multiple_video_capture, args=(5,), name="upload_video")
         else:
             self.thread = threading.Thread(target=self.multiple_image_capture, name="upload_image")
-        if isInit:
-            self.thread.start()
 
         self.thread.daemon = True
         self._running = True
+        if isInit:
+            self.thread.start()
 
     def terminate(self):
         self._running = False
@@ -108,6 +108,8 @@ class CameraOptions(object):
             except KeyboardInterrupt:
                 self.stop_capture()
                 sys.exit(0)
+        else:
+            self.stop_capture()
 
     def multiple_video_capture(self, count):
         print("multiple_video_capture")
