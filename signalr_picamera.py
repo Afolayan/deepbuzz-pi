@@ -164,8 +164,8 @@ def onReceivedMessage(message):
                     print("running threads: upload_image captured")
                     cameraOptions.terminate()
                     thread.join()
-                if not thread.isAlive():
-                    print('thread killed')
+                    if not thread.isAlive():
+                        print('thread killed')
             cameraOptions.stop_capture()
     elif commandItem == 'video':
         cameraOptions = CameraOptions(isVideo=True)
