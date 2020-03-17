@@ -75,10 +75,15 @@ class CameraOptions(object):
     capture_time = 0.3
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
-    def __init__(self):
-        self.thread = threading.Thread(target=self.multiple_image_capture, name="upload_image")
+    def __init__(self, isInit=True, isVideo=False):
+        if isVideo:
+            self.thread = threading.Thread(target=self.multiple_video_capture, args=(5,), name="upload_video")
+        else:
+            self.thread = threading.Thread(target=self.multiple_image_capture, name="upload_image")
+        if isInit:
+            self.thread.start()
+
         self.thread.daemon = True
-        self.thread.start()
         self._running = True
 
     def terminate(self):
@@ -143,20 +148,19 @@ def onReceivedMessage(message):
     command = commandObject["command"]
 
     if commandItem == 'camera':
-        cameraOptions = CameraOptions()
         if command == 'start':
+            cameraOptions = CameraOptions(isInit=True)
             print("starting camera")
-            # cameraOptions.serve_forever()
-            # cameraOptions.multiple_image_capture()
 
         else:
+            cameraOptions = CameraOptions(isInit=False)
             cameraOptions.terminate()
             cameraOptions.stop_capture()
     elif commandItem == 'video':
-        cameraOptions = CameraOptions()
         if command == 'start':
-            cameraOptions.multiple_video_capture(5)
+            cameraOptions = CameraOptions(isInit=True, isVideo=True)
         else:
+            cameraOptions = CameraOptions(isInit=False)
             cameraOptions.terminate()
             cameraOptions.stop_capture()
     print("done command: " + commandItem)
