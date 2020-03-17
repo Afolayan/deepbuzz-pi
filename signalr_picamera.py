@@ -158,7 +158,10 @@ def onReceivedMessage(message):
                 print("cameraOptions object is null")
             for thread in threading.enumerate():
                 print("running threads: ", thread.name)
+                if thread.name is "upload_image":
+                    print("running threads: upload_image captured again")
                 if thread.name == "upload_image":
+                    print("running threads: upload_image captured")
                     cameraOptions.terminate()
                     thread.join()
                 if not thread.isAlive():
