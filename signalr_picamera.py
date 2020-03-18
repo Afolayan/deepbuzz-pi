@@ -198,7 +198,8 @@ def input_with_default(input_text, default_value):
     return default_value if value is None or value.strip() == "" else value
 
 
-class SignalRCommands(threading.Thread):
+# class SignalRCommands(threading.Thread):
+class SignalRCommands:
     server_url = "wss://deepbuzz-project.azurewebsites.net/commandHub"
 
     username = "jeff"
@@ -207,20 +208,20 @@ class SignalRCommands(threading.Thread):
         super().__init__()
         self.hub_connection = HubConnectionBuilder() \
             .with_url(self.server_url) \
-            .configure_logging(logging.ERROR) \
+            .configure_logging(logging.DEBUG) \
             .with_automatic_reconnect({
             "type": "raw",
             "keep_alive_interval": 10,
             "reconnect_interval": 5,
             "max_attempts": 5
         }).build()
-        threading.Thread.__init__(self)
-        self.threadID = threadID
-        self.name = name
-        self.counter = counter
+        # threading.Thread.__init__(self)
+        # self.threadID = threadID
+        # self.name = name
+        # self.counter = counter
 
     def run(self):
-        print("Starting " + self.name)
+        # print("Starting " + self.name)
         self.setup_connection(onReceivedMessage)
 
     def setup_connection(self, onReceivedCommand):
@@ -249,4 +250,5 @@ REQUEST_QUEUE_SIZE = 5
 
 if __name__ == '__main__':
     commandsHub = SignalRCommands(1, "Thread-1", 1)
-    commandsHub.start()
+    # commandsHub.start()
+    commandsHub.run()
