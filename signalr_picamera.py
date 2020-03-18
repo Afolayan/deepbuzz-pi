@@ -76,19 +76,19 @@ class CameraOptions(threading.Thread):
     timestamp = datetime.now().strftime('%d-%m-%y_%H-%M-%S')
 
     def __init__(self, isVideo=False):
-        super().__init__()
         self.killed = False
         if isVideo:
-            threading.Thread(target=self.multiple_video_capture, args=(5,), name="upload_video")
+            threading.Thread.__init__(self, target=self.multiple_video_capture, args=(5,), name="upload_video")
         else:
-            threading.Thread(
+            threading.Thread.__init__(
+                self,
                 target=self.multiple_image_capture,
                 name="upload_image")
         self.daemon = True
-        self.__run_backup = self.run
-        self.run = self.__run
 
     def start(self):
+        self.__run_backup = self.run
+        self.run = self.__run
         threading.Thread.start(self)
 
     def __run(self):
