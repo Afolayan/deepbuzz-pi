@@ -31,9 +31,6 @@ def upload(filename, isImage=True):
             with requests.Session() as s:
                 r = s.post(url, files=files, data=datum)
 
-                print("content ==> {0}".format(r.content))
-                print("json ==> {0}".format(r.json))
-
                 return r.status_code
     else:
         print("MP4Box -add {0} {1}".format(filename, "video.mp4"))
