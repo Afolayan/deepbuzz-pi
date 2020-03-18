@@ -85,10 +85,10 @@ class CameraOptions(threading.Thread):
                 target=self.multiple_image_capture,
                 name="upload_image")
         self.daemon = True
-
-    def start(self):
         self.__run_backup = self.run
         self.run = self.__run
+
+    def start(self):
         threading.Thread.start(self)
 
     def __run(self):
