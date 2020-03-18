@@ -111,7 +111,7 @@ class CameraOptions(threading.Thread):
     def kill(self):
         self.killed = True
 
-    def multiple_image_capture(self, stop):
+    def multiple_image_capture(self):
         print("multiple_image_capture")
         self.init_camera()
         self.camera.start_preview()
@@ -122,11 +122,6 @@ class CameraOptions(threading.Thread):
 
                     upload_status = upload(filename)
                     print("upload status code: {0}".format(upload_status))
-
-                    print("self._running is: ", stop())
-
-                    if stop():
-                        break
 
                     if upload_status != 200:
                         self.stop_capture()
