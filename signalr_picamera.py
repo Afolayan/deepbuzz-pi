@@ -210,7 +210,7 @@ class SignalRCommands(threading.Thread):
         super().__init__()
         self.hub_connection = HubConnectionBuilder() \
             .with_url(self.server_url) \
-            .configure_logging(logging.DEBUG) \
+            .configure_logging(logging.ERROR) \
             .with_automatic_reconnect({
             "type": "raw",
             "keep_alive_interval": 10,
