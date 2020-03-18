@@ -92,20 +92,17 @@ class CameraOptions(threading.Thread):
         threading.Thread.start(self)
 
     def __run(self):
-        print("__run: ")
         sys.settrace(self.globaltrace)
         self.__run_backup()
         self.run = self.__run_backup
 
     def globaltrace(self, frame, event, arg):
-        print("globaltrace: event: ", event)
         if event == 'call':
             return self.localtrace
         else:
             return None
 
     def localtrace(self, frame, event, arg):
-        print("localtrace: kill: ", self.killed)
         if self.killed:
             if event == 'line':
                 raise SystemExit()
@@ -167,7 +164,6 @@ class CameraOptions(threading.Thread):
 
 def onReceivedMessage(message):
     commandObject = message[0]
-    print("commandObject: ", commandObject)
     commandItem = commandObject["item"]
     command = commandObject["command"]
 
@@ -182,7 +178,6 @@ def onReceivedMessage(message):
                 # if thread.name == "upload_image":
 
             print("stopping camera")
-            cameraOptions.killed = True
             cameraOptions.kill()
             cameraOptions.join()
             if not cameraOptions.isAlive():
